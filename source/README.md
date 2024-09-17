@@ -1,3 +1,3 @@
 # Zdrojové kódy aplikace
 
-Sem patří umístit aplikace (tzn. v této složce bude `main.py` soubor).
+Zde můžete najít zdrojový kód aplikace (tzn. v této složce bude `main.py` soubor).

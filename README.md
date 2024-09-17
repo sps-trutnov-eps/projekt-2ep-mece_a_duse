@@ -6,7 +6,7 @@ Tahová bojovka postavená na hře Sword & Souls.
 
 - [ ] Tréninková budova
 - [ ] Obchod
-- [ ] Úrovňový systém
+- [ ] Levelový systém
 
 ### Doplňkové funkce
 
