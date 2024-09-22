@@ -4,6 +4,28 @@ import level_menu
 
 SCREEN_RESOLUTION = (1280, 960)
 
+class Button:
+    def __init__(self, text, x, y):
+        self.font = pygame.font.Font(None, 64)
+        self.text = self.font.render(text, True, (255, 255, 255))
+        self.rect = self.text.get_rect().center(x, y)
+        self.color = None
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.text, self.rect)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEMOTION:
+            if self.rect.collidepoint(event.pos):
+                self.color = (200, 200, 200) 
+            else:
+                self.color = (100, 100, 100)
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                pass
+
 def init_game() -> pygame.Surface:
     """Initialize the game and return the screen surface."""
     pygame.init()

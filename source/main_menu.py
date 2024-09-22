@@ -1,12 +1,5 @@
 import pygame
 
-def draw_text(text, surface, x, y):
-    font = pygame.font.Font(None, 74)
-    textobj = font.render(text, True, (255, 255, 255))
-    textrect = textobj.get_rect()
-    textrect.center = (x, y)
-    surface.blit(textobj, textrect)
-
 def main_menu(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše')
 
@@ -17,4 +10,9 @@ def main_menu(screen: pygame.Surface) -> int:
                 exit(0)
 
         screen.fill(BLACK)
+        button_1 = Button('Postava', screen, SCREEN_RESOLUTION(0) // 2, SCREEN_RESOLUTION(1) // 2)
+        button_2 = Button('Aréna', screen, SCREEN_RESOLUTION(0) // 2, SCREEN_RESOLUTION(1) // 2)
+        button_3 = Button('Trénink', screen, SCREEN_RESOLUTION(0) // 2, SCREEN_RESOLUTION(1) // 2)
+        button_4 = Button('Obchod', screen, SCREEN_RESOLUTION(0) // 2, SCREEN_RESOLUTION(1) // 2)
+        button_5 = Button('Muzeum', screen, SCREEN_RESOLUTION(0) // 2, SCREEN_RESOLUTION(1) // 2)
 
