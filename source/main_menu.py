@@ -1,20 +1,23 @@
 import pygame
-
-def draw_text(text, surface, x, y):
-    font = pygame.font.Font(None, 74)
-    textobj = font.render(text, True, (255, 255, 255))
-    textrect = textobj.get_rect()
-    textrect.center = (x, y)
-    surface.blit(textobj, textrect)
+from main import Button, SCREEN_RESOLUTION
 
 def main_menu(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše')
+
+    button_texts = ['Postava', 'Aréna', 'Trénink', 'Obchod', 'Muzeum']
+    buttons = [Button(text, SCREEN_RESOLUTION(0) // 2, SCREEN_RESOLUTION(1) // 2 + i * 60 - 150) for i, text in enumerate(button_texts)]
 
     while True:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
-                exit(0)
+                return 9
+            for i, button in enumerate(buttons):
+                if button.handle_event(event):
+                    return (i + 1)
 
         screen.fill(BLACK)
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
 
