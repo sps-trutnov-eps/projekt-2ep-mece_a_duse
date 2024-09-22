@@ -23,7 +23,7 @@ class Button:
                 self.color = (100, 100, 100)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
-                pass
+                return True
 
 def main(scene_id: int = 0) -> None:
     """Main function of the game loop."""

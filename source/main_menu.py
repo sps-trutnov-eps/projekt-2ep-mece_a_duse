@@ -12,8 +12,9 @@ def main_menu(screen: pygame.Surface) -> int:
         for event in events:
             if event.type == pygame.QUIT:
                 return 9
-            for button in buttons:
-                button.handle_event(event)
+            for i, button in enumerate(buttons):
+                if button.handle_event(event):
+                    return (i + 1)
 
         screen.fill(BLACK)
         for button in buttons:
