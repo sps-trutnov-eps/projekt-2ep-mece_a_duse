@@ -16,14 +16,18 @@ timer=0
 veci=6
 x=0.5
 tisk=0
+region=0
 posun=[rozliseni_okna[0]/2,rozliseni_okna[1]/2]
 okno = pygame.display.set_mode(rozliseni_okna)
 pozadi=pygame.image.load("sprites/pozadi.png")
-hrac=pygame.image.load("sprites/hrac.png")
+hrac=pygame.image.load("sprites/hrac sam.png")
 hvezda=pygame.image.load("sprites/star.png")
 jabko=pygame.image.load("sprites/apple.png")
+stit=pygame.image.load("sprites/stit.png")
 hrac=pygame.transform.scale(hrac,(100,100))
+stit=pygame.transform.scale(stit,(64,64))
 clock = pygame.time.Clock()
+stit_rotated=stit
 fps = 60
 while True:
     okno.blit(pozadi,(0,0))
@@ -89,6 +93,32 @@ while True:
             print(jabka[2])
     a=0    
     #a=len(jabka)
+    
+    
+    region=0
+    if mys[1]!=0:
+        if mys[0]>0:
+            region+=2
+        if mys[1]<0:
+            region+=1
+        #print(region)
+        if region==0:
+            stit_rotated=pygame.transform.rotate(stit,-d*60-90)
+            stit_rotated=pygame.transform.flip(stit_rotated,True,False)
+        elif region==1:
+            stit_rotated=pygame.transform.rotate(stit,-d*60+90)
+            stit_rotated=pygame.transform.flip(stit_rotated,True,False)
+        elif region==2:
+            stit_rotated=pygame.transform.rotate(stit,d*60-90)
+        else:
+            stit_rotated=pygame.transform.rotate(stit,d*60+90)
+    if region<2:
+        hrac=pygame.transform.flip(hrac,True,False)
+        okno.blit(hrac,(rozliseni_okna[0]/2-50, rozliseni_okna[1]/2-50))
+        hrac=pygame.transform.flip(hrac,True,False)
+    else:
+        okno.blit(hrac,(rozliseni_okna[0]/2-50, rozliseni_okna[1]/2-50))
+    
     while a<len(jabka):
         if jabka[a+5]<0:
             score=0
@@ -112,13 +142,14 @@ while True:
     
     text=font.render(str(score),True ,(0,0,0))
     okno.blit(text,(150,100))
-    okno.blit(hrac,(rozliseni_okna[0]/2-50, rozliseni_okna[1]/2-50))
+    
     a=0
     while a<len(jabka):
         okno.blit(jabko,(jabka[a]+posun[0]-16,jabka[a+1]+posun[1]-16))
         a+=veci
     a=0
-    pygame.draw.rect(okno,(0,0,0),(posun[0]+pozice[0],posun[1]+pozice[1],10,10))
+    #pygame.draw.rect(okno,(0,0,0),(posun[0]+pozice[0],posun[1]+pozice[1],10,10))
+    okno.blit(stit_rotated,(pozice[0]+posun[0]-32,pozice[1]+posun[1]-32))
     pygame.display.update()
     clock.tick(fps)
 
