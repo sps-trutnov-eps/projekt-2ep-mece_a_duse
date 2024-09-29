@@ -1,19 +1,20 @@
 import pygame
 from main import Button, BLACK, SCREEN_RESOLUTION
 
-def menu(screen: pygame.Surface) -> int:
-    """Display the main menu and handle button events.
+def shop(screen: pygame.Surface) -> int:
+    """
+    Display the level menu and handle user interaction.
 
     Args:
         screen (pygame.Surface): The surface to draw the menu on.
 
     Returns:
-        int: The index of the selected menu option.
+        int: The selected level number, or 9 if the window is closed.
     """
-    pygame.display.set_caption('Meče & Duše')
+    pygame.display.set_caption('Meče & Duše: Obchod')
+    button_texts = ['Zbraně', 'Brnění']
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2 - 150
-    button_texts = ['Postava', 'Aréna', 'Trénink', 'Obchod', 'Muzeum']
     buttons = [
         Button(text, screen_width, screen_height + i * 60)
         for i, text in enumerate(button_texts)
@@ -26,7 +27,7 @@ def menu(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
-                    return i + 1
+                    pass
 
         screen.fill(BLACK)
         for button in buttons:

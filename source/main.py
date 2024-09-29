@@ -40,6 +40,18 @@ class Button:
                 return True
         return False
 
+class Text:
+    """A class to represent a text in the game."""
+
+    def __init__(self, text: str, x: int, y: int) -> None:
+        """Initialize the text, position, and default color."""
+        self.font = pygame.font.Font(None, 64)
+        self.text = self.font.render(text, True, WHITE)
+        self.rect = self.text.get_rect(center=(x, y))
+
+    def draw(self, screen: pygame.Surface) -> None:
+        """Draw the text on the screen."""
+        screen.blit(self.text, self.rect)
 
 def main(scene_id: int = 0) -> None:
     """Main function of the game loop.
@@ -48,34 +60,30 @@ def main(scene_id: int = 0) -> None:
         scene_id (int): The initial scene ID. Defaults to 0.
     """
     from menu import menu
+    from character import character
     from arena import arena
+    from shop import shop
 
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
 
     scene_list = [
         menu,
-        # character,
+        character,
         arena,
         # training,
         # shop,
         # museum,
-        # level_1,
-        # level_2,
-        # level_3,
-        # level_4,
-        # boss,
         # melee,
         # block,
         # range,
         # agility
     ]
 
-    while scene_id != 15:
+    while scene_id != 10:
         scene_id = scene_list[scene_id](screen)
 
     pygame.quit()
-
 
 if __name__ == '__main__':
     main()
