@@ -11,11 +11,11 @@ def menu(screen: pygame.Surface) -> int:
         int: The index of the selected menu option.
     """
     pygame.display.set_caption('Meče & Duše')
-    screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2 - 150
     button_texts = ['Melee', 'Block', 'Range', 'Agility']
+    screen_width = SCREEN_RESOLUTION[0] // 2
+    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts // 2)))
     buttons = [
-        Button(text, screen_width, screen_height + i * 60)
+        Button(text, screen_width, screen_height + i * 64)
         for i, text in enumerate(button_texts)
     ]
 

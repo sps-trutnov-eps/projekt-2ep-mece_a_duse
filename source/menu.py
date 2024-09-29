@@ -12,10 +12,10 @@ def menu(screen: pygame.Surface) -> int:
     """
     pygame.display.set_caption('Meče & Duše')
     screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2 - 150
+    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts // 2)))
     button_texts = ['Postava', 'Aréna', 'Trénink', 'Obchod', 'Muzeum']
     buttons = [
-        Button(text, screen_width, screen_height + i * 60)
+        Button(text, screen_width, screen_height + i * 64)
         for i, text in enumerate(button_texts)
     ]
 

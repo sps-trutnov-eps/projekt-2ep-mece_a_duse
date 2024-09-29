@@ -9,14 +9,14 @@ def arena(screen: pygame.Surface) -> int:
         screen (pygame.Surface): The surface to draw the menu on.
 
     Returns:
-        int: The selected level number, or 9 if the window is closed.
+        int: The 0 to return to the main menu or 9 if the window is closed.
     """
     pygame.display.set_caption('Meče & Duše: Nekonečná Aréna')
-    button_texts = ['']
+    button_texts = ['', 'Exit']
     screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2 - 150
+    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts // 2)))
     buttons = [
-        Button(text, screen_width, screen_height + i * 60)
+        Button(text, screen_width, screen_height + i * 64)
         for i, text in enumerate(button_texts)
     ]
 
