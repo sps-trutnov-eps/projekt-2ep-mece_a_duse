@@ -30,6 +30,7 @@ stit=pygame.transform.scale(stit,(64,64))
 clock = pygame.time.Clock()
 stit_rotated=stit
 image_rect = stit.get_rect(center=(0, 0))
+regiony=[0,1,3,2]
 fps = 60
 while True:
     okno.blit(pozadi,(0,0))
@@ -147,15 +148,13 @@ while True:
             jabka.remove(jabka[a])
         elif 20<jabka[a][5]<40:
             if d-x<jabka[a][2]<d+x or d-x<jabka[a][2]-3<d+x or d-x<jabka[a][2]+3<d+x:
-                if jabka[a][7]==region or abs(d)<0.5:
-                    if abs(d)<0.5:
-                        if region==0 and True:
-                            pass
-                    #print(jabka[a][2])
-                    b=0
-                    if jabka[a][6]==False:
-                        score+=1
-                    jabka.remove(jabka[a])
+                if 
+                            
+                #print(jabka[a][2])
+                b=0
+                if jabka[a][6]==False:
+                    score+=1
+                jabka.remove(jabka[a])
         a+=1
     #print(d)
     
