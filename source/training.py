@@ -1,7 +1,7 @@
 import pygame
 from main import Button, BLACK, SCREEN_RESOLUTION
 
-def menu(screen: pygame.Surface) -> int:
+def training(screen: pygame.Surface) -> int:
     """Display the main menu and handle button events.
 
     Args:

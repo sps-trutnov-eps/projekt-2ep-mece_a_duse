@@ -63,6 +63,8 @@ def main(scene_id: int = 0) -> None:
     from character import character
     from arena import arena
     from shop import shop
+    from training import training
+    from block import block
 
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
@@ -71,11 +73,11 @@ def main(scene_id: int = 0) -> None:
         menu,
         character,
         arena,
-        # training,
-        # shop,
+        training,
+        shop,
         # museum,
         # melee,
-        # block,
+        block,
         # range,
         # agility
     ]
