@@ -64,7 +64,11 @@ def main(scene_id: int = 0) -> None:
     from arena import arena
     from shop import shop
     from training import training
-    from block import block
+    # from museum import museum
+    # from melee import melee
+    # from block import block
+    # from range import range
+    # from agility import agility
 
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
@@ -77,7 +81,7 @@ def main(scene_id: int = 0) -> None:
         shop,
         # museum,
         # melee,
-        block,
+        # block,
         # range,
         # agility
     ]

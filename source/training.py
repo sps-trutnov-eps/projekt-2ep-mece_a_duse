@@ -13,7 +13,7 @@ def training(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše')
     button_texts = ['Melee', 'Block', 'Range', 'Agility']
     screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts // 2)))
+    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts) // 2))
     buttons = [
         Button(text, screen_width, screen_height + i * 64)
         for i, text in enumerate(button_texts)
