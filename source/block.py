@@ -41,7 +41,7 @@ while True:
     stisknute_klavesy = pygame.key.get_pressed()
     
     timer-=1
-    if timer<0:
+    if timer<0:#vytváření jablek
         e=[]
         timer=1000/(score+20)
         d=random.randint(0,3)
@@ -83,28 +83,23 @@ while True:
         jabka.append(e)
         #print(jabka)
     a=0
-    while a<len(jabka):
+    while a<len(jabka):#pohyb jablek
         jabka[a][0]-=jabka[a][3]
         jabka[a][1]-=jabka[a][4]
         jabka[a][5]-=1
         a+=1
     a=0
-    if stisknute_klavesy[pygame.K_s]:
+    if stisknute_klavesy[pygame.K_s]:#vymaže všechny jabka
         jabka=[]
     
     
-    mys=pygame.mouse.get_pos()
+    mys=pygame.mouse.get_pos()#vypočítávání kam dát štít
     mys=mys[0]-posun[0],mys[1]-posun[1]
     a=(mys[0]**2+mys[1]**2)**0.5
     a=a/100
     pozice=mys[0]/a,mys[1]/a
     if pozice[1]!=0:
         d=math.atan(pozice[0]/pozice[1])
-    if tisk==1:
-        if pozice[1]!=0:
-            print(d)
-        if len(jabka)!=0:
-            print(jabka[2])
     a=0    
     #a=len(jabka)
     
@@ -116,7 +111,7 @@ while True:
         if mys[1]<0:
             region+=1
         #print(region)
-        image_rect = stit.get_rect(center=(pozice[0]+posun[0],pozice[1]+posun[1]))
+        image_rect = stit.get_rect(center=(pozice[0]+posun[0],pozice[1]+posun[1]))#rotace a vykreslování štítu
         rotated_rect = stit_rotated.get_rect(center=image_rect.center)
         if region==0:
             stit_rotated=pygame.transform.rotate(stit,-d*60)
@@ -131,14 +126,14 @@ while True:
         stit_rotated=pygame.transform.rotate(stit_rotated,90)
         
         
-    if mys[0]<0:
+    if mys[0]<0:#vykreslování hráče
         hrac=pygame.transform.flip(hrac,True,False)
         okno.blit(hrac,(rozliseni_okna[0]/2-50, rozliseni_okna[1]/2-50))
         hrac=pygame.transform.flip(hrac,True,False)
     else:
         okno.blit(hrac,(rozliseni_okna[0]/2-50, rozliseni_okna[1]/2-50))
     
-    while a<len(jabka):
+    while a<len(jabka):#detekce trefení jablek
         if jabka[a][5]<0:
             if jabka[a][6]==False:
                 score=0
@@ -148,24 +143,19 @@ while True:
             jabka.remove(jabka[a])
         elif 20<jabka[a][5]<40:
             if d-x<jabka[a][2]<d+x or d-x<jabka[a][2]-3<d+x or d-x<jabka[a][2]+3<d+x:
-                if 
+                if jabka[a][7]==region:
                             
-                #print(jabka[a][2])
-                b=0
-                if jabka[a][6]==False:
-                    score+=1
-                jabka.remove(jabka[a])
+                    #print(jabka[a][2])
+                    b=0
+                    if jabka[a][6]==False:
+                        score+=1
+                    jabka.remove(jabka[a])
         a+=1
     #print(d)
-    
-    
-    
-    
-    text=font.render(str(score),True ,(0,0,0))
+    text=font.render(str(score),True ,(0,0,0))#score
     okno.blit(text,(150,100))
-    
     a=0
-    while a<len(jabka):
+    while a<len(jabka):#vykreslování jablek
         if jabka[a][6]==False:
             okno.blit(jabko,(jabka[a][0]+posun[0]-16,jabka[a][1]+posun[1]-16))
         else:
