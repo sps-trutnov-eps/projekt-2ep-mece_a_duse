@@ -1,7 +1,7 @@
 import pygame
 from main import Button, Text, BLACK, SCREEN_RESOLUTION
 
-def character(screen: pygame.Surface) -> int:
+def museum(screen: pygame.Surface) -> int:
     """
     Display the level menu and handle user interaction.
 
@@ -12,7 +12,7 @@ def character(screen: pygame.Surface) -> int:
         int: The 0 to return to the main menu, or 9 if the window is closed.
     """
     pygame.display.set_caption('Meče & Duše: Character')
-    character_texts = ['Melle: ', 'Block: ', 'Range: ', 'Agility: ']
+    character_texts = ['Poražený nepřítelé: ', 'Celkový dammage: ', 'Maximální úroveň: ', 'Poražení nepřátelé: ', 'Melle rekord: ', 'Block rekord: ', 'Range rekord: ', 'Agility rekord: ', 'Poražený nepřítel: ', 'Čas hry: ']
     screen_width = SCREEN_RESOLUTION[0] // 2
     buttons = [
         Button('Exit', screen_width, (64 * len(character_texts)))

@@ -64,7 +64,7 @@ def main(scene_id: int = 0) -> None:
     from arena import arena
     from shop import shop
     from training import training
-    # from museum import museum
+    from museum import museum
     # from melee import melee
     # from block import block
     # from range import range
@@ -79,7 +79,7 @@ def main(scene_id: int = 0) -> None:
         arena,
         training,
         shop,
-        # museum,
+        museum,
         # melee,
         # block,
         # range,
