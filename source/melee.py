@@ -20,7 +20,11 @@ pozadi=pygame.image.load("sprites/pozadi.png")
 hrac=pygame.image.load("sprites/hrac.png")
 hvezda=pygame.image.load("sprites/star.png")
 jabko=pygame.image.load("sprites/apple.png")
+uder=pygame.image.load("sprites/uder.png")
+uder=pygame.transform.scale(uder,(200,200))
 hrac=pygame.transform.scale(hrac,(100,100))
+uder_nahoru=pygame.transform.rotate(uder,90)
+uder_vlevo=pygame.transform.flip(uder,True ,False )
 clock = pygame.time.Clock()
 fps = 60
 while True:
@@ -68,6 +72,12 @@ while True:
     if timer2==0:
         timer2=5
         if stisknute_klavesy[pygame.K_UP]:
+            if not rotace:
+                uder_nahoru=pygame.transform.flip(uder_nahoru,True,False)
+                okno.blit(uder_nahoru,(rozliseni_okna[0]/2-40, rozliseni_okna[1]*2/3-230))
+                uder_nahoru=pygame.transform.flip(uder_nahoru,True,False)
+            else:
+                okno.blit(uder_nahoru,(rozliseni_okna[0]/2-140, rozliseni_okna[1]*2/3-230))
             while len(nahore)!=0:
                 if nahore[0]<20:
                     if nahore[0]>15:
@@ -77,6 +87,7 @@ while True:
                 else:
                     break 
         elif stisknute_klavesy[pygame.K_RIGHT]:
+            okno.blit(uder,(rozliseni_okna[0]/2+30, rozliseni_okna[1]*2/3-170))
             rotace=False
             while len(vpravo)!=0:
                 if vpravo[0]<20:
@@ -87,6 +98,7 @@ while True:
                 else:
                     break 
         elif stisknute_klavesy[pygame.K_LEFT]:
+            okno.blit(uder_vlevo,(rozliseni_okna[0]/2-150, rozliseni_okna[1]*2/3-170))
             rotace=True
             a=0
             while len(vlevo)!=0:
