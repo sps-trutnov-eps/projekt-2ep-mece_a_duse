@@ -1,6 +1,6 @@
 import pygame
 import random
-from main import SCREEN_RESOLUTION, WHITE
+from main import WHITE, SCREEN_RESOLUTION
 
 def agility() -> int:
     """
