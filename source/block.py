@@ -96,7 +96,7 @@ while True:
     mys=pygame.mouse.get_pos()#vypočítávání kam dát štít
     mys=mys[0]-posun[0],mys[1]-posun[1]
     a=(mys[0]**2+mys[1]**2)**0.5
-    a=a/100
+    a=a/50
     pozice=mys[0]/a,mys[1]/a
     if pozice[1]!=0:
         d=math.atan(pozice[0]/pozice[1])
@@ -141,7 +141,7 @@ while True:
                 score+=2
             b=0
             jabka.remove(jabka[a])
-        elif 20<jabka[a][5]<40:
+        elif 5<jabka[a][5]<30:
             if d-x<jabka[a][2]<d+x or d-x<jabka[a][2]-3<d+x or d-x<jabka[a][2]+3<d+x:
                 if jabka[a][7]==region:
                             
