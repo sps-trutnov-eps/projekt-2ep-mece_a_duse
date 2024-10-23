@@ -2,18 +2,15 @@ import pygame
 import random
 from main import WHITE, SCREEN_RESOLUTION
 
-def agility() -> int:
+def agility(screen: pygame.Surface) -> int:
     """
     XXX
 
     Returns:
         int: score if the player collides with an apple.
     """
-    pygame.init()
-
     # Screen dimensions
     screen_width, screen_height = SCREEN_RESOLUTION
-    screen = pygame.display.set_mode((screen_width, screen_height))
 
     # Load images
     player_image = pygame.image.load('sprites/hrac sam.png')
@@ -32,8 +29,8 @@ def agility() -> int:
     # Apple settings
     apple_width = apple_image.get_width()
     apple_height = apple_image.get_height()
-    apple_speed = 1
-    apple_frequency = 600
+    apple_speed = 4
+    apple_frequency = 180
 
     # Initialize player and apple positions
     player = pygame.Rect(player_x, player_y, player_width, player_height)
@@ -79,16 +76,16 @@ def agility() -> int:
                 apple_xy = apple_x[rand - 2]
             else:
                 apple_xy = apple_y[rand - 4]
-            apple = pygame.Rect(apple_xy[0], apple_xy[1], apple_width, apple_height)
+            apple = pygame.Rect(apple_xy[0] - (apple_width // 2), apple_xy[1] - (apple_height // 2), apple_width, apple_height)
             if rand < 2:
                 apples__x.append(apple)
             elif rand < 4:
                 apples_x.append(apple)
             else:
                 apples_y.append(apple)
-            if apple_frequency > 90:
+            if apple_frequency > 120:
                 apple_frequency -= 5
-                apple_speed = 4 + int((600 - apple_frequency) * (4 // 510))
+                apple_speed = 4 + int((180 - apple_frequency) * 0.05)
 
         # Move apples
         for apple in apples_y[:]:
@@ -132,7 +129,3 @@ def agility() -> int:
         pygame.display.flip()
         clock.tick(60)
         frame_count += 1
-
-    pygame.quit()
-
-agility()

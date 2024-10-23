@@ -12,7 +12,7 @@ def shop(screen: pygame.Surface) -> int:
         int: The selected level number, or 9 if the window is closed.
     """
     pygame.display.set_caption('Meče & Duše: Obchod')
-    button_texts = ['Zbraně', 'Brnění']
+    button_texts = ['Meč', 'Štít', 'Luk', 'Brnění']
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts) // 2))
     buttons = [
@@ -27,7 +27,11 @@ def shop(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
-                    pass
+                    with open('data.txt', 'r') as filein, open('data.txt', 'r') as fileout:
+                        data = filein.read().splitlines()
+                        if data[i + 3] < 10 and (data[0] // (data[i + 3] ** data[i + 3])) >= 1:
+                            data[i + 3] += 1
+                        fileout.write(data)
 
         screen.fill(BLACK)
         for button in buttons:

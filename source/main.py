@@ -61,14 +61,14 @@ def main(scene_id: int = 0) -> None:
     """
     from menu import menu
     from character import character
-    from arena import arena
+    # from arena import arena
     from shop import shop
     from training import training
     from museum import museum
     # from melee import melee
-    from block import block
+    # from block import block
     # from range import range
-    # from agility import agility
+    from agility import agility
 
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
@@ -76,14 +76,14 @@ def main(scene_id: int = 0) -> None:
     scene_list = [
         menu,
         character,
-        arena,
+        # arena,
         training,
         shop,
         museum,
         # melee,
-        block,
+        # block,
         # range,
-        # agility
+        agility
     ]
 
     while scene_id != 10:

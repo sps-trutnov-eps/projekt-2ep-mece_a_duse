@@ -12,13 +12,14 @@ def museum(screen: pygame.Surface) -> int:
         int: The 0 to return to the main menu, or 9 if the window is closed.
     """
     pygame.display.set_caption('Meče & Duše: Character')
-    character_texts = ['Poražený nepřítelé: ', 'Celkový dammage: ', 'Maximální úroveň: ', 'Poražení nepřátelé: ', 'Melle rekord: ', 'Block rekord: ', 'Range rekord: ', 'Agility rekord: ', 'Poražený nepřítel: ', 'Čas hry: ']
+    character_texts = ['Maximální úroveň: ', 'Poražený nepřítel: ', 'Celkový demage: ', 'Pocet smrti', 'Melle rekord: ', 'Block rekord: ', 'Range rekord: ', 'Agility rekord: ']
     screen_width = SCREEN_RESOLUTION[0] // 2
+    screen_height = SCREEN_RESOLUTION[1] // 2
     buttons = [
-        Button('Exit', screen_width, (64 * len(character_texts)))
+        Button('Exit', screen_width, screen_height + (64 * ((len(character_texts) // 2) + 1)))
     ]
     texts = [
-        Text(text, screen_width, (64 * i))
+        Text(text, screen_width, screen_height - (64 * ((len(character_texts) // 2) - i)))
         for i, text in enumerate(character_texts)
     ]
 
