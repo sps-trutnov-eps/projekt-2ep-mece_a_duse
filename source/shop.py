@@ -27,6 +27,8 @@ def shop(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
+                    if i == 4:
+                        return 0
                     with open('data.txt', 'r') as filein, open('data.txt', 'r') as fileout:
                         data = filein.read().splitlines()
                         if data[i + 3] < 10 and (data[0] // (data[i + 3] ** data[i + 3])) >= 1:
