@@ -28,6 +28,14 @@ fps = 60
 hrac=pygame.image.load("sprites/hrac.png")
 enemy=pygame.image.load("sprites/hrac sam.png")
 pozadi=pygame.image.load("sprites/pozadi.png")
+
+#slovo=[]
+#soubor = open('data.txt', 'r', encoding = 'utf-8')
+#for radek in soubor:
+#    slovo=radek[:-1]
+#    save.append(slovo)
+#soubor.close()
+
 enemy=pygame.transform.flip(enemy,True,False)
 hrac=pygame.transform.scale(hrac,(150,150))
 utocim=True
@@ -41,13 +49,22 @@ enemy_demage=100
 schopnosti=[0,0,0,0,0,0]
 brneni=5
 mec=3
+shield=1-2/10
 smer=2
 priste=0
 hrac_max_zivoty=1000
 a=0
+total_demage=0
 enemy_demage=enemy_demage-enemy_demage/10*brneni
 hrac_demage=hrac_demage*mec
 buff=[0,0,0,0]#stun,shield,heal,poison
+enemaci=[10,12,14,16,20]
+porazeno=0
+total_porazeno=0
+money=0
+level=0
+xp=0
+uroven=2
 while True:
     events = pygame.event.get()
     for event in events:
@@ -62,77 +79,81 @@ while True:
     if utocim:
         if 359<hrac_x<500:#pohyb hrace
             hrac_x+=smer
+            timer=0
         else:
-            print("b")
-            if hrac_x<400:
-                utocim=False
-                hrac_x-=smer
-                hrac_x-=smer
-                print("c")
+            if timer<5:
+                pass #animace
             else:
-                if priste==0:#urceni jaky utok udelat
-                    enemy_zivoty-=hrac_demage
-                if priste==1:
-                    enemy_zivoty-=hrac_demage*2
-                elif priste==2:
-                    enemy_zivoty-=hrac_demage/2
-                    buff[0]=5
-                elif priste==3:
-                    hrac_zivoty+=hrac_max_zivoty/4
-                    if hrac_zivoty>hrac_max_zivoty:
-                        hrac_zivoty=hrac_max_zivoty
-                elif priste==4:
-                    buff[2]=5
-                elif priste==5:
-                    buff[3]==2
-                elif priste==6:
-                    enemy_zivoty-=hrac_demage*10
-                smer=smer*-1
-                hrac_x+=smer
-                hrac_x+=smer
-                hrac_x+=smer
-                enemy_zivoty-=hrac_demage/4*buff[-1]
-                priste=0
-                while a<5:
-                    if schopnosti[a]!=0:
-                        schopnosti[a]-=1
-                    a+=1
-                a=0
-                while a<len(buff)-1:
-                    if buff[a]!=0:
-                        buff[a]-=1
-                    a+=1
-                a=0
-                print("uder h")
+                if hrac_x<400:
+                    utocim=False
+                    hrac_x-=smer
+                else:
+                    if priste==0:#urceni jaky utok udelat
+                        enemy_zivoty-=hrac_demage
+                        total_demage+=hrac_demage
+                    if priste==1:
+                        enemy_zivoty-=hrac_demage*2
+                        total_demage+=hrac_demage*2
+                    elif priste==2:
+                        enemy_zivoty-=hrac_demage/2
+                        total_demage+=hrac_demage/2
+                        buff[0]=5
+                    elif priste==3:
+                        hrac_zivoty+=hrac_max_zivoty/4
+                        if hrac_zivoty>hrac_max_zivoty:
+                            hrac_zivoty=hrac_max_zivoty
+                    elif priste==4:
+                        buff[2]=5
+                    elif priste==5:
+                        buff[3]==2
+                    elif priste==6:
+                        enemy_zivoty-=hrac_demage*10
+                        total_demage+=hrac_demage*10
+                    smer=smer*-1
+                    hrac_x+=smer
+                    hrac_x+=smer
+                    enemy_zivoty-=hrac_demage/4*buff[-1]
+                    priste=0
+                    while a<5:
+                        if schopnosti[a]!=0:
+                            schopnosti[a]-=1
+                        a+=1
+                    a=0
+                    while a<len(buff)-1:
+                        if buff[a]!=0:
+                            buff[a]-=1
+                        a+=1
+                    a=0
+                    print("uder h")
 
 
     elif not utocim and buff[0]==0:#pohyb nepritele
          if 721>enemy_x>400:
            enemy_x+=smer
+           timer=0
          else:
-             print("a")
-             if enemy_x>600:
-                utocim=True
-                enemy_x-=smer
-                enemy_x-=smer
-                print("d")
+             if timer<5:
+                 pass#animace enemy
              else:
-                if buff[3]>0:
-                    hrac_zivoty+=enemy_demage*-1
-                else:
-                    if buff[2]>0:#pocitani demage
-                        hrac_zivoty-=enemy_demage/5
-                    elif 1==random.randint(1,5):
-                        hrac_zivoty-=enemy_demage/2
+                 if enemy_x>600:
+                    utocim=True
+                    enemy_x-=smer
+                 else:
+                    if buff[3]>0:
+                        hrac_zivoty+=enemy_demage*-1
                     else:
-                        hrac_zivoty-=enemy_demage
-                if hrac_zivoty>hrac_max_zivoty:
-                    hrac_zivoty=hrac_max_zivoty
-                smer=smer*-1
-                enemy_x+=smer
-                enemy_x+=smer
-                enemy_x+=smer
-                print("uder e")
+                        if buff[2]>0:#pocitani demage
+                            hrac_zivoty-=enemy_demage/5
+                        elif 1==random.randint(1,5):
+                            hrac_zivoty-=enemy_demage/shield
+                        else:
+                            hrac_zivoty-=enemy_demage
+                    if hrac_zivoty>hrac_max_zivoty:
+                        hrac_zivoty=hrac_max_zivoty
+                    smer=smer*-1
+                    enemy_x+=smer
+                    enemy_x+=smer
+                    print("uder e")
                 
 
 
@@ -178,7 +199,18 @@ while True:
     if hrac_zivoty<0:
         print("prohra")
     elif enemy_zivoty<0:
-        print("výhra")
+        porazeno+=1
+        total_porazeno+=1
+        if porazeno==len(enemaci):
+            print("výhra")
+        else:
+            money+=random.randint(0,5**uroven)#novy nepritel
+            xp+random(0,100+1,4**level/2)
+            enemy_zivoty=enemaci[porazeno]*2
+            enemy_demage=round(enemaci[porazeno]*0.4)+1
+
+
+
 
 
 
