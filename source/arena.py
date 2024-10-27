@@ -51,9 +51,8 @@ hrac_demage=100
 enemy_demage=100
 schopnosti=[0,0,0,0,0,0]
 brneni=5
-mec=3
+mec=10
 shield=1-2/10
-smer=2
 smer=5
 priste=0
 a=0
@@ -178,7 +177,6 @@ while True:
              if enemy_x>600:
                 utocim=True
                 enemy_x-=smer
-                enemy_x-=smer
              else:
                  if enemy_x>600:
                     utocim=True
@@ -195,17 +193,12 @@ while True:
                             hrac_zivoty-=enemy_demage
                     if hrac_zivoty>hrac_max_zivoty:
                         hrac_zivoty=hrac_max_zivoty
+                    print("uder e")
+                    if hrac_zivoty>hrac_max_zivoty:
+                        hrac_zivoty=hrac_max_zivoty
                     smer=smer*-1
                     enemy_x+=smer
-                    enemy_x+=smer
-                    print("uder e")
-                 if hrac_zivoty>hrac_max_zivoty:
-                    hrac_zivoty=hrac_max_zivoty
-                 smer=smer*-1
-                 enemy_x+=smer
-                 enemy_x+=smer
-                 enemy_x+=smer
-
+    
 
 
 
@@ -254,9 +247,11 @@ while True:
         if porazeno==len(enemaci):
             print("výhra")
         else:
+            print("porazil jsi jednoho")
             money+=random.randint(0,5**uroven)#novy nepritel
-            xp+random(0,100+1,4**level/2)
-            enemy_zivoty=enemaci[porazeno]*2
+            xp+random.randint(0,round(100+1.4**level/2,0))
+            enemy_max_zivoty=enemaci[porazeno]*2
+            enemy_zivoty=enemy_max_zivoty
             enemy_demage=round(enemaci[porazeno]*0.4)+1
 
 
