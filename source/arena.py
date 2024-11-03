@@ -27,7 +27,7 @@ clock = pygame.time.Clock()
 fps = 60
 hrac=pygame.image.load("sprites/hrac.png")
 enemy=pygame.image.load("sprites/hrac sam.png")
-pozadi=pygame.image.load("sprites/pozadi.png")
+pozadi=pygame.image.load("sprites/arena.png")
 
 #slovo=[]
 #soubor = open('data.txt', 'r', encoding = 'utf-8')
@@ -36,28 +36,31 @@ pozadi=pygame.image.load("sprites/pozadi.png")
 #    save.append(slovo)
 #soubor.close()
 
+enemy=pygame.transform.scale(enemy,(150,150))
 enemy=pygame.transform.flip(enemy,True,False)
 hrac=pygame.transform.scale(hrac,(150,150))
 utocim=True
 timer=0
-hrac_x=SCREEN_RESOLUTION[0]/3
+hrac_x=SCREEN_RESOLUTION[0]/3-160
 enemy_x=SCREEN_RESOLUTION[0]*2/3
-enemy_zivoty=1000
-hrac_zivoty=2000
+hrac_max_zivoty=1000
+enemy_max_zivoty=1000
+enemy_zivoty=enemy_max_zivoty
+hrac_zivoty=hrac_max_zivoty
 hrac_demage=100
 enemy_demage=100
 schopnosti=[0,0,0,0,0,0]
 brneni=5
-mec=3
+mec=10
 shield=1-2/10
-smer=2
+smer=5
 priste=0
-hrac_max_zivoty=1000
 a=0
 total_demage=0
 enemy_demage=enemy_demage-enemy_demage/10*brneni
 hrac_demage=hrac_demage*mec
-buff=[0,0,0,0]#stun,shield,heal,poison
+buff=[0,0,0,0,0]#stun,shield,heal,poison,strenght
+potion=[1,1,1,1]#demageboost,heal,cooldowrecharg,shield
 enemaci=[10,12,14,16,20]
 porazeno=0
 total_porazeno=0
@@ -77,7 +80,7 @@ while True:
     stisknute_klavesy = pygame.key.get_pressed()
     timer+=1
     if utocim:
-        if 359<hrac_x<500:#pohyb hrace
+        if 199<hrac_x<500:#pohyb hrace
             hrac_x+=smer
             timer=0
         else:
@@ -88,6 +91,8 @@ while True:
                     utocim=False
                     hrac_x-=smer
                 else:
+                    if buff[4]!=0:
+                        hrac_demage=hrac_demage*2
                     if priste==0:#urceni jaky utok udelat
                         enemy_zivoty-=hrac_demage
                         total_demage+=hrac_demage
@@ -119,6 +124,8 @@ while True:
                             schopnosti[a]-=1
                         a+=1
                     a=0
+                    if buff[4]!=0:
+                        hrac_demage=hrac_demage/2
                     while a<len(buff)-1:
                         if buff[a]!=0:
                             buff[a]-=1
@@ -134,6 +141,9 @@ while True:
          else:
              if timer<5:
                  pass#animace enemy
+             if enemy_x>600:
+                utocim=True
+                enemy_x-=smer
              else:
                  if enemy_x>600:
                     utocim=True
@@ -150,12 +160,10 @@ while True:
                             hrac_zivoty-=enemy_demage
                     if hrac_zivoty>hrac_max_zivoty:
                         hrac_zivoty=hrac_max_zivoty
+                    print("uder e")
                     smer=smer*-1
                     enemy_x+=smer
-                    enemy_x+=smer
-                    print("uder e")
-                
-
+    
 
 
 
@@ -190,7 +198,17 @@ while True:
     elif stisknute_klavesy[pygame.K_p] and schopnosti[9]==0 and priste==0:
         schopnosti[9]=5
         priste=10
-
+    elif stisknute_klavesy[pygame.K_a] and potion[0]!=0:
+        buff[4]+=5
+    elif stisknute_klavesy[pygame.K_s] and potion[1]!=0:
+        hrac_zivoty+=hrac_max_zivoty/2
+        if hrac_zivoty>hrac_max_zivoty:
+            hrac_zivoty=hrac_max_zivoty
+    elif stisknute_klavesy[pygame.K_d] and potion[2]!=0:
+        for i in schopnosti:
+            schopnosti[i-1]=0
+    elif stisknute_klavesy[pygame.K_f] and potion[3]!=0:
+        buff[1]+=10
 
 
 
@@ -201,12 +219,16 @@ while True:
     elif enemy_zivoty<0:
         porazeno+=1
         total_porazeno+=1
-        if porazeno==len(enemaci):
+        if porazeno>len(enemaci)-1:
             print("výhra")
         else:
+            print("porazil jsi jednoho")
+            print(porazeno)
+            print(len(enemaci))
             money+=random.randint(0,5**uroven)#novy nepritel
-            xp+random(0,100+1,4**level/2)
-            enemy_zivoty=enemaci[porazeno]*2
+            xp+random.randint(0,round(100+1.4**level/2,0))
+            enemy_max_zivoty=enemaci[porazeno]*2
+            enemy_zivoty=enemy_max_zivoty
             enemy_demage=round(enemaci[porazeno]*0.4)+1
 
 
@@ -235,7 +257,8 @@ while True:
 
 
 
-
+    pygame.draw.rect(screen,(255,0,0),(200,SCREEN_RESOLUTION[1]/4*3,hrac_zivoty/(hrac_max_zivoty/150),10))
+    pygame.draw.rect(screen,(255,0,0),(700,SCREEN_RESOLUTION[1]/4*3,enemy_zivoty/(enemy_max_zivoty/150),10))
     screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))#vykreslovani
     screen.blit(enemy,(enemy_x,SCREEN_RESOLUTION[1]/2))
     pygame.display.update()
