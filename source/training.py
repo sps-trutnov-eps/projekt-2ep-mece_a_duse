@@ -26,10 +26,10 @@ def training(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
-                    if i != 4:
+                    if i != 4
                         return i + 6
                     else:
-                        return 0
+                        return 10
 
         screen.fill(BLACK)
         for button in buttons:

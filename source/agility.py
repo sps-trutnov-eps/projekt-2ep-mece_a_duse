@@ -108,13 +108,24 @@ def agility(screen: pygame.Surface) -> int:
         # Check for collisions
         for apple in apples_x:
             if player.colliderect(apple):
-                return 4
+                with open("myfile.txt", "r") as file:
+                    input = [int(line.strip()) for line in file]
+                return 3
         for apple in apples_y:
             if player.colliderect(apple):
-                return 4
+                with open("myfile.txt", "r") as file:
+                    input = [int(line.strip()) for line in file]
+                return 3
         for apple in apples__x:
             if player.colliderect(apple):
-                return 4
+                with open("data.txt", "r") as file:
+                    input = [int(line.strip()) for line in file]
+                    if input[22] < score:
+                        input[22] = score
+                    input[16] = (input[16] + score)
+                with open("data.txt", "w") as file:
+                    file.write(input)
+                return 3
 
         # Draw everything
         screen.fill(WHITE)
