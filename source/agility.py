@@ -66,6 +66,7 @@ def agility(screen: pygame.Surface) -> int:
 
         # Spawn apples
         if frame_count % apple_frequency == 0:
+            frame_count = 0
             apple_y = [((screen_width // 2) + player_width, 0), (screen_width // 2, 0), ((screen_width // 2) - player_width, 0)]
             apple_x = [(0, screen_height - (player_height // 2)), (0, screen_height - (player_height * 1.5))]
             apple__x = [(screen_width, screen_height - (player_height // 2)), (screen_width, screen_height - (player_height * 1.5))]
