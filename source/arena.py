@@ -28,14 +28,16 @@ fps = 60
 hrac=pygame.image.load("sprites/hrac.png")
 enemy=pygame.image.load("sprites/hrac sam.png")
 pozadi=pygame.image.load("sprites/arena.png")
-
+hrac_luk=pygame.image.load("sprites\hrac s lukem.png")
+sip=pygame.image.load("sprites\šíp.png")
 #slovo=[]
 #soubor = open('data.txt', 'r', encoding = 'utf-8')
 #for radek in soubor:
 #    slovo=radek[:-1]
 #    save.append(slovo)
 #soubor.close()
-
+hrac_luk=pygame.transform.scale(hrac_luk,(150,150))
+sip=pygame.transform.scale(sip,(100,100))
 enemy=pygame.transform.scale(enemy,(150,150))
 enemy=pygame.transform.flip(enemy,True,False)
 hrac=pygame.transform.scale(hrac,(150,150))
@@ -52,7 +54,9 @@ enemy_demage=100
 schopnosti=[0,0,0,0,0,0]
 brneni=5
 mec=10
-shield=1-2/10
+shield=1-2/10#upravit 2
+luk=100#  %
+luk_demage=250
 smer=5
 priste=0
 a=0
@@ -68,19 +72,30 @@ money=0
 level=0
 xp=0
 uroven=2
+
+
+
+
+
+
 while True:
-    events = pygame.event.get()
-    for event in events:
-        if event.type == pygame.QUIT:
-            pass
+    screen.blit(pozadi,(0,0))
+    for udalost in pygame.event.get():
+        if udalost.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
             #return 10
         #for i, button in enumerate(buttons):
          #   if button.handle_event(event):
           #      pass
     stisknute_klavesy = pygame.key.get_pressed()
     timer+=1
-    if utocim:
+    if utocim and smer!=0:
         if 199<hrac_x<500:#pohyb hrace
+            if hrac_x==200 and smer==5:
+                if luk>random.randint(0,100):
+                    hrac_x+=smer
+                    smer=0
             hrac_x+=smer
             timer=0
         else:
@@ -163,7 +178,15 @@ while True:
                     print("uder e")
                     smer=smer*-1
                     enemy_x+=smer
-    
+    elif smer==0:
+        if timer<30:
+            screen.blit(hrac_luk,(200,SCREEN_RESOLUTION[1]/2))
+        elif timer<50:
+            screen.blit(sip,(timer*20-250,SCREEN_RESOLUTION[1]/2))
+        else:
+            enemy_zivoty-=luk_demage
+            smer=5
+            
 
 
 
@@ -241,7 +264,7 @@ while True:
 
 
 
-    screen.blit(pozadi,(0,0))
+
 
     
 
@@ -259,7 +282,8 @@ while True:
 
     pygame.draw.rect(screen,(255,0,0),(200,SCREEN_RESOLUTION[1]/4*3,hrac_zivoty/(hrac_max_zivoty/150),10))
     pygame.draw.rect(screen,(255,0,0),(700,SCREEN_RESOLUTION[1]/4*3,enemy_zivoty/(enemy_max_zivoty/150),10))
-    screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))#vykreslovani
+    if smer!=0 or timer>30:
+        screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))#vykreslovani
     screen.blit(enemy,(enemy_x,SCREEN_RESOLUTION[1]/2))
     pygame.display.update()
     clock.tick(fps)

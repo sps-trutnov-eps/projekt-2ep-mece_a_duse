@@ -14,7 +14,7 @@ c=0
 d=0
 timer=0
 veci=8
-x=0.5
+x=0
 tisk=0
 region=0
 e=[]
@@ -30,7 +30,6 @@ stit=pygame.transform.scale(stit,(64,64))
 clock = pygame.time.Clock()
 stit_rotated=stit
 image_rect = stit.get_rect(center=(0, 0))
-regiony=[0,1,3,2]
 fps = 60
 while True:
     okno.blit(pozadi,(0,0))
@@ -72,6 +71,7 @@ while True:
             e.append(a/(a/c*3))
         if random.randint(0,10)==1:
             e.append(True)
+            a=0
         else:
             e.append(False)
             a=0
@@ -80,6 +80,7 @@ while True:
         if e[-3]<0:
             a+=1
         e.append(a)
+        #print(e)
         jabka.append(e)
         #print(jabka)
     a=0
@@ -132,7 +133,9 @@ while True:
         hrac=pygame.transform.flip(hrac,True,False)
     else:
         okno.blit(hrac,(rozliseni_okna[0]/2-50, rozliseni_okna[1]/2-50))
-    
+    if stisknute_klavesy[pygame.K_a] and timer%10==0:
+        print(region)
+        print(d)
     while a<len(jabka):#detekce trefení jablek
         if jabka[a][5]<0:
             if jabka[a][6]==False:
@@ -141,15 +144,32 @@ while True:
                 score+=2
             b=0
             jabka.remove(jabka[a])
-        elif 5<jabka[a][5]<30:
-            if d-x<jabka[a][2]<d+x or d-x<jabka[a][2]-3<d+x or d-x<jabka[a][2]+3<d+x:
-                if jabka[a][7]==region:
-                            
+        elif jabka[a][5]<25:
+            if d-0.5<jabka[a][2]<d+0.5 or d-0.5<jabka[a][2]-3<d+0.5 or d-0.5<jabka[a][2]+3<d+0.5:
+                if abs(jabka[a][2])>0.75:
+                    x=1
+                else:
+                    x=2
+                
+                if jabka[a][7]==3:
+                    x*=-1
+                elif jabka[a][7]==2 and x==2:
+                    x*=-1
+                elif jabka[a][7]==1 and x==1:
+                    x*=-1
+                    
+                
+                if jabka[a][7]==region or jabka[a][7]+x==region:
                     #print(jabka[a][2])
                     b=0
                     if jabka[a][6]==False:
                         score+=1
                     jabka.remove(jabka[a])
+                #else:
+                 #   print(jabka[a][2])
+                  #  print("jabka reg ",jabka[a][7])
+                   # print("x ",x)
+                    #print(region)
         a+=1
     #print(d)
     text=font.render(str(score),True ,(0,0,0))#score
