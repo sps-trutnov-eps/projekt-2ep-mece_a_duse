@@ -12,7 +12,9 @@ def character(screen: pygame.Surface) -> int:
         int: The 0 to return to the main menu, or 9 if the window is closed.
     """
     pygame.display.set_caption('Meče & Duše: Character')
-    character_texts = ['Melle: ', 'Block: ', 'Range: ', 'Agility: ']
+    with open('data.txt', 'r') as file:
+        data = file.read().splitlines()
+    character_texts = ['Melle: ' + str(data[]), 'Block: ' + str(data[13]), 'Range: ' + str(data[14]), 'Agility: ' + str(data[15])]
     screen_width = SCREEN_RESOLUTION[0] // 2
     buttons = [
         Button('Exit', screen_width, (64 * len(character_texts)))
