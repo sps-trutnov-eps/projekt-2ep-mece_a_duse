@@ -1,23 +1,24 @@
-money
-level
-xp
-výzbroj_meč
-výzbroj_brnění
-výzbroj_štít
-výzbroj_luk
-potion_1
-potion_2
-potion_3
-potion_4
-stat_demage
-stat_životy
-stat_štít
-stat_luk
-stat_dodge
-total_demage
-total_poraženo_nepřátel
-total_smrti
-rekord_meč
-rekord_štít
-rekord_luk
-rekord_dodge
+0 money
+1 level
+2 xp
+3 výzbroj_meč
+4 výzbroj_brnění
+5 výzbroj_štít
+6 výzbroj_luk
+7 potion_1
+8 potion_2
+9 potion_3
+10 potion_4
+11 stat_demage
+12 stat_životy
+13 stat_štít
+14 stat_luk
+15 stat_dodge
+16 total_demage
+17 total_poraženo_nepřátel
+18 total_smrti
+19 rekord_meč
+20 rekord_štít
+21 rekord_luk
+22 rekord_dodge
+23 arena_max_uroven
