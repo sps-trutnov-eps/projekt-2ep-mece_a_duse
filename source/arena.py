@@ -1,7 +1,7 @@
 import pygame
 import random
 import sys
-
+import math
 pygame.init()
 #def arena(screen: pygame.Surface) -> int:
 SCREEN_RESOLUTION=[1080,720]
@@ -30,12 +30,13 @@ enemy=pygame.image.load("sprites/hrac sam.png")
 pozadi=pygame.image.load("sprites/arena.png")
 hrac_luk=pygame.image.load("sprites\hrac s lukem.png")
 sip=pygame.image.load("sprites\šíp.png")
-#slovo=[]
-#soubor = open('data.txt', 'r', encoding = 'utf-8')
-#for radek in soubor:
-#    slovo=radek[:-1]
-#    save.append(slovo)
-#soubor.close()
+save=[]
+soubor = open('data.txt', 'r', encoding = 'utf-8')
+for radek in soubor:
+    slovo=radek[:-1]
+    save.append(int(slovo))
+soubor.close()
+print(save)
 hrac_luk=pygame.transform.scale(hrac_luk,(150,150))
 sip=pygame.transform.scale(sip,(100,100))
 enemy=pygame.transform.scale(enemy,(150,150))
@@ -45,33 +46,40 @@ utocim=True
 timer=0
 hrac_x=SCREEN_RESOLUTION[0]/3-160
 enemy_x=SCREEN_RESOLUTION[0]*2/3
-hrac_max_zivoty=1000
-enemy_max_zivoty=1000
+hrac_max_zivoty=save[12]
+
+enemaci=[uroven*10,uroven*10+2,uroven*10+4,uroven*10+6,uroven*10+10]
+
+uroven=save[23]
+enemy_max_zivoty=enemaci[porazeno]*2
 enemy_zivoty=enemy_max_zivoty
+enemy_demage=round(enemaci[porazeno]*0.4)+1
+enemy_demage=enemy_demage-enemy_demage/10*brneni
+
+
 hrac_zivoty=hrac_max_zivoty
-hrac_demage=100
-enemy_demage=100
+hrac_demage=save[11]
 schopnosti=[0,0,0,0,0,0]
-brneni=5
-mec=10
-shield=1-2/10#upravit 2
-luk=100#  %
-luk_demage=250
+brneni=save[4]
+mec=save[3]
+shield=1-save[5]/10
+luk=round(math.log(save[14])*5,0)#  %
+luk_demage=save[14]*save[6]
 smer=5
 priste=0
 a=0
-total_demage=0
-enemy_demage=enemy_demage-enemy_demage/10*brneni
+total_demage=save[16]
+
 hrac_demage=hrac_demage*mec
 buff=[0,0,0,0,0]#stun,shield,heal,poison,strenght
-potion=[1,1,1,1]#demageboost,heal,cooldowrecharg,shield
-enemaci=[10,12,14,16,20]
+potion=[save[7],save[8],save[9],save[10]]#demageboost,heal,cooldowrecharg,shield
+
 porazeno=0
-total_porazeno=0
-money=0
-level=0
-xp=0
-uroven=2
+total_porazeno=save[17]
+money=save[0]
+level=save[1]
+xp=save[2]
+
 
 
 
@@ -253,6 +261,7 @@ while True:
             enemy_max_zivoty=enemaci[porazeno]*2
             enemy_zivoty=enemy_max_zivoty
             enemy_demage=round(enemaci[porazeno]*0.4)+1
+            enemy_demage=enemy_demage-enemy_demage/10*brneni
 
 
 
