@@ -7,6 +7,12 @@ pygame.init()
 font=pygame.font.Font(None, 64)
 jabka=[]
 rozliseni_okna = (1080, 720)
+soubor = open('data.txt', 'r', encoding = 'utf-8')
+save=[]
+for radek in soubor:
+    slovo=radek[:-1]
+    save.append(int(slovo))
+soubor.close()
 score=0
 a=0
 b=0
@@ -139,6 +145,10 @@ while True:
     while a<len(jabka):#detekce trefení jablek
         if jabka[a][5]<0:
             if jabka[a][6]==False:
+                if score>save[20]:
+                    save[20]=score
+                save[12]+=score
+                save[13]+=score
                 score=0
             else:
                 score+=2
@@ -172,6 +182,20 @@ while True:
                     #print(region)
         a+=1
     #print(d)
+        
+        
+    if stisknute_klavesy[pygame.K_m]:
+        with open("data.txt", "r") as file:
+            lines = file.readlines()
+            
+        a=0
+        while a!=len(save):
+            lines[a]=str(save[a])+"\n"
+            a+=1
+        with open("data.txt", "w") as file:
+            file.writelines(lines)
+        
+        
     text=font.render(str(score),True ,(0,0,0))#score
     okno.blit(text,(150,100))
     a=0

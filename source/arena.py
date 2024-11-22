@@ -60,7 +60,7 @@ enemy_demage=enemy_demage-enemy_demage/10*save[4]
 hrac_zivoty=hrac_max_zivoty
 hrac_demage=save[11]
 schopnosti=[0,0,0,0,0,0]
-mec=save[3]
+
 shield=1-save[5]/10
 luk=round(math.log(save[14])*5,0)#  %
 luk_demage=save[14]*save[6]
@@ -68,16 +68,12 @@ smer=5
 priste=0
 a=0
 total_demage=save[16]
-
-hrac_demage=hrac_demage*mec
+dodge=round(math.log(save[15]*5))
+hrac_demage=hrac_demage*save[3]
 buff=[0,0,0,0,0]#stun,shield,heal,poison,strenght
-potion=[save[7],save[8],save[9],save[10]]#demageboost,heal,cooldowrecharg,shield
+#potion#demageboost,heal,cooldowrecharg,shield
 
 porazeno=0
-total_porazeno=save[17]
-money=save[0]
-level=save[1]
-xp=save[2]
 
 
 font=pygame.font.Font(None, 40)
@@ -177,7 +173,9 @@ while True:
                     enemy_x-=smer
                  else:
                     pop[1]=60
-                    if buff[3]>0:
+                    if random.randint(0,100)<dodge:
+                        pop[0]=0
+                    elif buff[3]>0:
                         hrac_zivoty+=enemy_demage
                         pop[0]=-enemy_demage
                     else:
@@ -242,16 +240,20 @@ while True:
     elif stisknute_klavesy[pygame.K_p] and schopnosti[9]==0 and priste==0:
         schopnosti[9]=5
         priste=10
-    elif stisknute_klavesy[pygame.K_a] and potion[0]!=0:
+    elif stisknute_klavesy[pygame.K_a] and save[7]!=0:
+        save[7]-=1
         buff[4]+=5
-    elif stisknute_klavesy[pygame.K_s] and potion[1]!=0:
+    elif stisknute_klavesy[pygame.K_s] and save[8]!=0:
+        save[8]-=1
         hrac_zivoty+=hrac_max_zivoty/2
         if hrac_zivoty>hrac_max_zivoty:
             hrac_zivoty=hrac_max_zivoty
-    elif stisknute_klavesy[pygame.K_d] and potion[2]!=0:
+    elif stisknute_klavesy[pygame.K_d] and save[9]!=0:
+        save[9]-=1
         for i in schopnosti:
             schopnosti[i-1]=0
-    elif stisknute_klavesy[pygame.K_f] and potion[3]!=0:
+    elif stisknute_klavesy[pygame.K_f] and save[10]!=0:
+        save[10]-=1
         buff[1]+=10
 
 
@@ -262,29 +264,37 @@ while True:
         print("prohra")
     elif enemy_zivoty<0:
         porazeno+=1
-        total_porazeno+=1
+        save[17]+=1
         if porazeno>len(enemaci)-1:
             print("výhra")
         else:
             print("porazil jsi jednoho")
             print(porazeno)
             print(len(enemaci))
-            money+=random.randint(0,5**uroven)#novy nepritel
-            xp+random.randint(0,round(100+1.4**level/2,0))
+            save[0]+=random.randint(0,5**uroven)#novy nepritel
+            print(save[0])
+            save[2]+=random.randint(0,round(100+1.4**save[1]/2,0))
+            if save[2]>100+1.5**save[1]/2:
+                save[2]-=round(100+1.5**save[1]/2,0)
+                save[2]=int(save[2])
+                save[1]+=1
             enemy_max_zivoty=enemaci[porazeno]*2
             enemy_zivoty=enemy_max_zivoty
             enemy_demage=round(enemaci[porazeno]*0.4)+1
             enemy_demage=enemy_demage-enemy_demage/10*save[4]
 
-
-
-
-
-
-
-
-
-
+    if stisknute_klavesy[pygame.K_m]:
+        with open("data.txt", "r") as file:
+            lines = file.readlines()
+            
+        print(len(lines))
+        a=0
+        while a!=len(save):
+            lines[a]=str(save[a])+"\n"
+            a+=1
+            
+        with open("data.txt", "w") as file:
+            file.writelines(lines)
 
 
     hrac_zivoty=round(hrac_zivoty,1)

@@ -5,6 +5,12 @@ pygame.init()
 font=pygame.font.Font(None, 64)
 
 rozliseni_okna = (1080, 720)
+save=[]
+soubor = open('data.txt', 'r', encoding = 'utf-8')
+for radek in soubor:
+    slovo=radek[:-1]
+    save.append(int(slovo))
+soubor.close()
 nahore=[]
 vpravo=[]
 vlevo=[]
@@ -14,7 +20,6 @@ a=0
 score=0
 rotace=False 
 rychlost=rozliseni_okna[0]/500*3
-rychlost2=rozliseni_okna[1]/500*3
 okno = pygame.display.set_mode(rozliseni_okna)
 pozadi=pygame.image.load("sprites/pozadi.png")
 hrac=pygame.image.load("sprites/hrac.png")
@@ -49,6 +54,9 @@ while True:
     while a!= len(nahore):
         nahore[a]-=1
         if nahore[a]==0:
+            if score>save[20]:
+                save[20]=score
+            save[11]+=score
             score=0
             nahore.remove(0)
             a-=1
@@ -57,6 +65,9 @@ while True:
     while a!= len(vpravo):
         vpravo[a]=vpravo[a]-1
         if vpravo[a]==0:
+            if score>save[20]:
+                save[20]=score
+            save[11]+=score
             score=0
             vpravo.remove(0)
             a-=1
@@ -65,13 +76,17 @@ while True:
     while a!= len(vlevo):
         vlevo[a]=vlevo[a]-1
         if vlevo[a]==0:
+            if score>save[20]:
+                save[20]=score
+            save[11]+=score
+            score=0
             vlevo.remove(0)
             a-=1
         a+=1
     a=0
     if timer2==0:
-        timer2=5
         if stisknute_klavesy[pygame.K_UP]:
+            timer2=10
             if not rotace:
                 uder_nahoru=pygame.transform.flip(uder_nahoru,True,False)
                 okno.blit(uder_nahoru,(rozliseni_okna[0]/2-40, rozliseni_okna[1]*2/3-230))
@@ -80,30 +95,32 @@ while True:
                 okno.blit(uder_nahoru,(rozliseni_okna[0]/2-140, rozliseni_okna[1]*2/3-230))
             while len(nahore)!=0:
                 if nahore[0]<20:
-                    if nahore[0]>15:
+                    if 20>nahore[0]>15:
                         score+=1
                     score+=1
                     nahore.remove(nahore[0])
                 else:
                     break 
         elif stisknute_klavesy[pygame.K_RIGHT]:
+            timer2=10
             okno.blit(uder,(rozliseni_okna[0]/2+30, rozliseni_okna[1]*2/3-170))
             rotace=False
             while len(vpravo)!=0:
                 if vpravo[0]<20:
-                    if vpravo[0]>15:
+                    if 20>vpravo[0]>15:
                         score+=1
                     score+=1
                     vpravo.remove(vpravo[0])
                 else:
                     break 
         elif stisknute_klavesy[pygame.K_LEFT]:
-            okno.blit(uder_vlevo,(rozliseni_okna[0]/2-150, rozliseni_okna[1]*2/3-170))
+            timer2=10
+            okno.blit(uder_vlevo,(rozliseni_okna[0]/2-170, rozliseni_okna[1]*2/3-170))
             rotace=True
             a=0
             while len(vlevo)!=0:
                 if vlevo[a]<20:
-                    if vlevo[0]>15:
+                    if 20>vlevo[0]>15:
                         score+=1
                     score+=1
                     vlevo.remove(vlevo[0])
@@ -114,12 +131,22 @@ while True:
         
         
     
-    
+    if stisknute_klavesy[pygame.K_m]:
+        with open("data.txt", "r") as file:
+            lines = file.readlines()
+            
+        a=0
+        while a!=len(save):
+            lines[a]=str(save[a])+"\n"
+            a+=1
+        with open("data.txt", "w") as file:
+            file.writelines(lines)
+
     
    
     a=0
     while a!=len(nahore):
-        okno.blit(jabko,(rozliseni_okna[0]/2,-nahore[a]*rychlost2+rozliseni_okna[1]*2/3-70))
+        okno.blit(jabko,(rozliseni_okna[0]/2,-nahore[a]*rychlost+rozliseni_okna[1]*2/3-70))
         a+=1
     a=0
     while a!=len(vpravo):
@@ -135,10 +162,10 @@ while True:
     
     if rotace:
         hrac=pygame.transform.flip(hrac,True,False)
-        okno.blit(hrac,(rozliseni_okna[0]/2-18, rozliseni_okna[1]*2/3-70))
+        okno.blit(hrac,(rozliseni_okna[0]/2-25, rozliseni_okna[1]*2/3-70))
         hrac=pygame.transform.flip(hrac,True,False)
     else:
-        okno.blit(hrac,(rozliseni_okna[0]/2-18, rozliseni_okna[1]*2/3-70))
+        okno.blit(hrac,(rozliseni_okna[0]/2-40, rozliseni_okna[1]*2/3-70))
     
     pygame.display.update()
     clock.tick(fps)
