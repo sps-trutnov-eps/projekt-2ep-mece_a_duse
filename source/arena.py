@@ -32,6 +32,11 @@ hrac_luk=pygame.image.load("sprites/hrac s lukem.png")
 sip=pygame.image.load("sprites/šíp.png")
 bar=pygame.image.load("sprites/arena-bar.png")
 zamek=pygame.image.load("sprites/zámek.png")
+icony=[pygame.image.load("sprites/icona lebka.png")]
+icony.append(pygame.image.load("sprites/icona meč.png"))
+icony.append(pygame.image.load("sprites/icona omráčení.png"))
+icony.append(pygame.image.load("sprites/icona rdce.png"))
+icony.append(pygame.image.load("sprites/icona štít.png"))
 save=[]
 soubor = open('data.txt', 'r', encoding = 'utf-8')
 for radek in soubor:
@@ -223,27 +228,27 @@ while True:
             schopnosti[0]=5#double_demage
             priste=1
     elif stisknute_klavesy[pygame.K_2] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 400<mys[0]<470):
-        if schopnosti[1]==0 and priste==0:
+        if schopnosti[1]==0 and priste==0 and save[1]>10:
             schopnosti[1]=10#stun
             priste=2
     elif stisknute_klavesy[pygame.K_3] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 470<mys[0]<540):
-        if schopnosti[2]==0 and priste==0:
+        if schopnosti[2]==0 and priste==0 and save[1]>20:
             schopnosti[2]=10#poison
             priste=3
     elif stisknute_klavesy[pygame.K_4] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 540<mys[0]<610):
-        if schopnosti[3]==0 and priste==0:
+        if schopnosti[3]==0 and priste==0 and save[1]>30:
             schopnosti[3]=20#heal
             priste=4
     elif stisknute_klavesy[pygame.K_5] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 610<mys[0]<680):
-        if schopnosti[4]==0 and priste==0:
+        if schopnosti[4]==0 and priste==0 and save[1]>40:
             schopnosti[4]=20#shield
             priste=5
     elif stisknute_klavesy[pygame.K_6] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 680<mys[0]<750):
-        if schopnosti[5]==0 and priste==0:
+        if schopnosti[5]==0 and priste==0 and save[1]>50:
             schopnosti[5]=30#heal
             priste=6
     elif stisknute_klavesy[pygame.K_7] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 750<mys[0]<820):
-        if schopnosti[6]==0 and priste==0:
+        if schopnosti[6]==0 and priste==0 and save[1]>60:
             schopnosti[6]=30#superdeamge
             priste=7
     elif stisknute_klavesy[pygame.K_a] and save[7]!=0:
@@ -349,7 +354,7 @@ while True:
     screen.blit(bar,(SCREEN_RESOLUTION[0]/2-210,SCREEN_RESOLUTION[1]-70))#vykreslovani
     while a<70:
         if save[1]<a:
-            screen.blit(zamek,(SCREEN_RESOLUTION[0]/2-245+a*7,SCREEN_RESOLUTION[1]-70))
+            screen.blit(zamek,(SCREEN_RESOLUTION[0]/2-210+a*7,SCREEN_RESOLUTION[1]-70))
         else:
             if schopnosti[int(a/10)]!=0:
                 pygame.draw.rect(screen,(0,0,0),(SCREEN_RESOLUTION[0]/2-210+a*7,SCREEN_RESOLUTION[1]-70,70,70))
@@ -357,6 +362,27 @@ while True:
                 screen.blit(text,(SCREEN_RESOLUTION[0]/2-185+a*7,SCREEN_RESOLUTION[1]-45))
         a+=10
     
+    
+    if buff[0]>0:
+        screen.blit(icony[2],(890,520))
+        text=font2.render(str(buff[0]),True,(0,0,0))
+        screen.blit(text,(920,550))
+    if buff[1]>0:
+        screen.blit(icony[3],(430,520))
+        text=font2.render(str(buff[1]),True,(0,0,0))
+        screen.blit(text,(460,550))
+    if buff[2]>0:
+        screen.blit(icony[4],(390,520))
+        text=font2.render(str(buff[2]),True,(0,0,0))
+        screen.blit(text,(420,550))
+    if buff[3]>0:
+        screen.blit(icony[0],(850,520))
+        text=font2.render(str(buff[3]),True,(0,0,0))
+        screen.blit(text,(880,550))
+    if buff[4]>0:
+        screen.blit(icony[1],(350,520))
+        text=font2.render(str(buff[4]),True,(0,0,0))
+        screen.blit(text,(380,550))
     
     
     
