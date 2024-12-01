@@ -131,16 +131,20 @@ while True:
         
         
     
-    if stisknute_klavesy[pygame.K_m]:
+    if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni minihry
+        print("konec")        
         with open("data.txt", "r") as file:
             lines = file.readlines()
             
+        #print(len(lines))
         a=0
         while a!=len(save):
             lines[a]=str(save[a])+"\n"
             a+=1
+            
         with open("data.txt", "w") as file:
             file.writelines(lines)
+        #return 0#Pavle Tady to přepiš!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     
    

@@ -38,13 +38,14 @@ icony.append(pygame.image.load("sprites/icona omráčení.png"))
 icony.append(pygame.image.load("sprites/icona rdce.png"))
 icony.append(pygame.image.load("sprites/icona štít.png"))
 uder=pygame.image.load("sprites/uder2.png")
+potion=pygame.image.load("sprites/potion.png")
 save=[]
 soubor = open('data.txt', 'r', encoding = 'utf-8')
 for radek in soubor:
     slovo=radek[:-1]
     save.append(int(slovo))
 soubor.close()
-print(save)
+#print(save)
 hrac_luk=pygame.transform.scale(hrac_luk,(150,150))
 sip=pygame.transform.scale(sip,(100,100))
 enemy=pygame.transform.scale(enemy,(150,150))
@@ -118,7 +119,7 @@ def mec(a,b,uder,screen):#hráč=True, priste,uder,screen
 
 
 font=pygame.font.Font(None, 40)
-pop=[0,0,0,0]#enemy dem t,hrac dem t
+pop=[0,0,0,0,0,0]#enemy dem t,hrac dem t,poison dem t
 
 font2=pygame.font.Font(None, 20)
 
@@ -128,6 +129,24 @@ while True:
         if udalost.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif udalost.type == pygame.MOUSEBUTTONUP and mys[1]>680:
+            if 150<mys[0]<190 and save[7]!=0:
+                    save[7]-=1
+                    buff[4]+=10#bonus demage
+            elif 190<mys[0]<230 and save[8]!=0:
+                save[8]-=1
+                hrac_zivoty+=hrac_max_zivoty/2
+                if hrac_zivoty>hrac_max_zivoty:#heal
+                    hrac_zivoty=hrac_max_zivoty
+            elif 230<mys[0]<270 and save[9]!=0:
+                save[9]-=1
+                a=0
+                while a!=len(schopnosti):#charge
+                    schopnosti[a]=0
+                    a+=1
+            elif 270<mys[0]<310 and save[10]!=0:
+                save[10]-=1
+                buff[2]+=10#shield
             #return 10
         #for i, button in enumerate(buttons):
          #   if button.handle_event(event):
@@ -156,40 +175,39 @@ while True:
                         pop[3]=60
                     if buff[4]!=0:
                         hrac_demage=hrac_demage*2
-                    if priste==0:#urceni jaky utok udelat
+                    if priste==0:#utok
                         enemy_zivoty-=hrac_demage
                         total_demage+=hrac_demage
                         pop[2]=hrac_demage
-                    if priste==1:
+                    if priste==1:#double utok
                         enemy_zivoty-=hrac_demage*2
                         total_demage+=hrac_demage*2
                         pop[2]=hrac_demage*2
-                    elif priste==2:
+                    elif priste==2:#shiel utok
                         enemy_zivoty-=hrac_demage/2
                         total_demage+=hrac_demage/2
                         buff[0]=5
                         pop[2]="bonk"
-                    elif priste==3:
+                    elif priste==3:#poison
                         enemy_zivoty-=hrac_demage/2
                         total_demage+=hrac_demage/2
                         pop[2]=hrac_demage/2
                         buff[3]+=1
-                    elif priste==4:
+                    elif priste==4:#heal
                         hrac_zivoty+=hrac_max_zivoty/4
                         if hrac_zivoty>hrac_max_zivoty:
                             hrac_zivoty=hrac_max_zivoty
-                    elif priste==5:
+                    elif priste==5:#shield
                         buff[2]=5
-                    elif priste==6:    
+                    elif priste==6:#heal2
                         buff[1]=5
-                    elif priste==7:
+                    elif priste==7:#super utok
                         enemy_zivoty-=hrac_demage*10
                         total_demage+=hrac_demage*10
                         pop[2]=hrac_demage*10
                     smer=smer*-1
                     hrac_x+=smer
                     hrac_x+=smer
-                    enemy_zivoty-=hrac_demage/4*buff[-1]
                     priste=0
                     a=0
                     while a<7:
@@ -199,12 +217,19 @@ while True:
                     a=0
                     if buff[4]!=0:
                         hrac_demage=hrac_demage/2
+                    if buff[3]>0:
+                        enemy_zivoty-=hrac_demage*buff[3]/4
+                        total_demage+=hrac_demage*buff[3]/4
+                        pop[4]=hrac_demage*buff[3]/4
+                        pop[5]=60
+                    else:
+                        pop[4]=0
                     while a<len(buff)-1:
-                        if buff[a]!=0:
+                        if buff[a]!=0 and a!=3:
                             buff[a]-=1
                         a+=1
                     a=0
-                    print("uder h")
+                    #print("uder h")
 
     elif buff[0]!=0:
         smer*=-1
@@ -240,14 +265,14 @@ while True:
                         elif 1==random.randint(1,5):
                             hrac_zivoty-=enemy_demage/shield
                             pop[0]=enemy_demage/shield
-                            print("block")
+                            #print("block")
                         else:
                             hrac_zivoty-=enemy_demage
                             pop[0]+=enemy_demage
                     if hrac_zivoty>hrac_max_zivoty:
                         hrac_zivoty=hrac_max_zivoty
                         
-                    print("uder e")
+                    #print("uder e")
                     smer=smer*-1
                     enemy_x+=smer
     elif smer==0:#střelba z luku
@@ -292,23 +317,10 @@ while True:
         if schopnosti[6]==0 and priste==0 and save[1]>=60:
             schopnosti[6]=30#superdeamge
             priste=7
-    elif stisknute_klavesy[pygame.K_a] and save[7]!=0:
-            save[7]-=1
-            buff[4]+=10
-    elif stisknute_klavesy[pygame.K_s] and save[8]!=0:
-        save[8]-=1
-        hrac_zivoty+=hrac_max_zivoty/2
-        if hrac_zivoty>hrac_max_zivoty:
-            hrac_zivoty=hrac_max_zivoty
-    elif stisknute_klavesy[pygame.K_d] and save[9]!=0:
-        save[9]-=1
-        for i in schopnosti:
-            schopnosti[i-1]=0
-    elif stisknute_klavesy[pygame.K_f] and save[10]!=0:
-        save[10]-=1
-        buff[2]+=10
+            
 
-
+            
+    
 
 
     a=0
@@ -316,7 +328,7 @@ while True:
         a=1
         print("prohra")
     elif enemy_zivoty<0:
-        #porazeno+=1
+        porazeno+=1
         save[17]+=1
         if porazeno>len(enemaci)-1:
             save[23]+=1
@@ -338,12 +350,12 @@ while True:
             enemy_demage=enemy_demage-enemy_demage/10*save[4]
 
     
-    if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or a==1:#ukonceni areny
-        
+    if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or a==1 or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni areny
+        print("konec")        
         with open("data.txt", "r") as file:
             lines = file.readlines()
             
-        print(len(lines))
+        #print(len(lines))
         a=0
         while a!=len(save):
             lines[a]=str(save[a])+"\n"
@@ -363,6 +375,7 @@ while True:
     pop[0]=round(pop[0],1)
     if pop[2]==int:
         pop[2]=round(pop[2],1)
+    pop[4]=int(round(pop[4],0))
     if pop[1]!=0:
         if pop[0]<0:
             text=font.render("+"+str(-pop[0]), True, (0, 0, 0))
@@ -388,6 +401,15 @@ while True:
         text=font.render(str(pop[2]), True, (255, 255, 255))
         screen.blit(text, (750,300+pop[3]))
         pop[3]-=1
+    if pop[5]!=0:
+        text=font.render(str(pop[4]), True, (0, 255, 0))
+        screen.blit(text, (850-2,300-2+pop[5]))
+        screen.blit(text, (850+2,300-2+pop[5]))
+        screen.blit(text, (850-2,300+2+pop[5]))
+        screen.blit(text, (850+2,300+2+pop[5]))
+        text=font.render(str(pop[4]), True, (255, 255, 255))
+        screen.blit(text, (850,300+pop[5]))
+        pop[5]-=1
 
 
 
@@ -404,6 +426,13 @@ while True:
                 text=font.render(str(schopnosti[int(a/10)]),True,(255,255,255))
                 screen.blit(text,(SCREEN_RESOLUTION[0]/2-185+a*7,SCREEN_RESOLUTION[1]-45))
         a+=10
+    
+    screen.blit(potion,(150,660))
+    a=0
+    while a<4:
+        text=font.render(str(save[7+a]), True, (0,0,0))
+        screen.blit(text,(170+a*40,680))
+        a+=1
     
     
     if buff[0]>0:
@@ -428,13 +457,17 @@ while True:
         screen.blit(text,(380,550))
     
     
-    
     pygame.draw.rect(screen,(255,0,0),(200,SCREEN_RESOLUTION[1]/4*3,hrac_zivoty/(hrac_max_zivoty/150),10))
     pygame.draw.rect(screen,(255,0,0),(700,SCREEN_RESOLUTION[1]/4*3,enemy_zivoty/(enemy_max_zivoty/150),10))
     text=font2.render(str(hrac_zivoty)+"/"+str(hrac_max_zivoty), True, (0,0,0))
     screen.blit(text, (250,SCREEN_RESOLUTION[1]/4*3))
     text=font2.render(str(enemy_zivoty)+"/"+str(enemy_max_zivoty), True, (0,0,0))
     screen.blit(text, (750,SCREEN_RESOLUTION[1]/4*3))
+    
+    
+    
+    
+    
     if smer!=0 or timer>30:
         screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))
     screen.blit(enemy,(enemy_x,SCREEN_RESOLUTION[1]/2))
