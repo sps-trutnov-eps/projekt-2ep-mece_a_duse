@@ -39,6 +39,7 @@ icony.append(pygame.image.load("sprites/icona rdce.png"))
 icony.append(pygame.image.load("sprites/icona štít.png"))
 uder=pygame.image.load("sprites/uder2.png")
 potion=pygame.image.load("sprites/potion.png")
+coin=pygame.image.load("sprites/coin.png")
 save=[]
 soubor = open('data.txt', 'r', encoding = 'utf-8')
 for radek in soubor:
@@ -463,8 +464,13 @@ while True:
     screen.blit(text, (250,SCREEN_RESOLUTION[1]/4*3))
     text=font2.render(str(enemy_zivoty)+"/"+str(enemy_max_zivoty), True, (0,0,0))
     screen.blit(text, (750,SCREEN_RESOLUTION[1]/4*3))
-    
-    
+    a=save[0]
+    while a>10000:
+        a/=10
+        a=round(a,0)
+    text=font.render(str(int(a)), True, (0,0,0))
+    screen.blit(text,(SCREEN_RESOLUTION[0]-130,SCREEN_RESOLUTION[1]-40))
+    screen.blit(coin,(SCREEN_RESOLUTION[0]-50,SCREEN_RESOLUTION[1]-50))
     
     
     
