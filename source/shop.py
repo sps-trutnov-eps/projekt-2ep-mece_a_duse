@@ -14,9 +14,9 @@ def shop(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše: Obchod')
     button_texts = ['Meč', 'Štít', 'Luk', 'Brnění', 'Exit']
     screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts) // 2))
+    screen_height = SCREEN_RESOLUTION[1] // 2
     buttons = [
-        Button(text, screen_width, screen_height + i * 64)
+        Button(text, screen_width, screen_height + (i - (len(button_texts) // 2)) * 64)
         for i, text in enumerate(button_texts)
     ]
 
@@ -28,7 +28,7 @@ def shop(screen: pygame.Surface) -> int:
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
                     if i == 4:
-                        return 10
+                        return 9
                     with open('data.txt', 'r') as filein, open('data.txt', 'r') as fileout:
                         data = filein.read().splitlines()
                         if data[i + 3] < 10 and (data[0] // (data[i + 3] ** data[i + 3])) >= 1:

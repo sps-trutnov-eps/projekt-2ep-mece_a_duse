@@ -23,13 +23,13 @@ def menu(screen: pygame.Surface) -> int:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
-                return 10
+                return 9
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
                     if i != 5:
                         return i + 1
                     else:
-                        return 10
+                        return 9
 
         screen.fill(BLACK)
         for button in buttons:

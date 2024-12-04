@@ -35,9 +35,8 @@ class Button:
                 self.color = LIGHT_GREY
             else:
                 self.color = GREY
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                return True
+        elif event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
+            return True
         return False
 
 class Text:
@@ -60,14 +59,13 @@ def main(scene_id: int = 0) -> None:
         scene_id (int): The initial scene ID. Defaults to 0.
     """
     from menu import menu
-    from character import character
-    # from arena import arena
+    from arena import arena
     from shop import shop
     from training import training
     from museum import museum
-    # from melee import melee
-    # from block import block
-    # from range import range
+    from melee import melee
+    from block import block
+    from range import range
     from agility import agility
 
     pygame.init()
@@ -75,18 +73,17 @@ def main(scene_id: int = 0) -> None:
 
     scene_list = [
         menu,
-        character,
-        # arena,
+        arena,
         training,
         shop,
         museum,
-        # melee,
-        # block,
-        # range,
+        melee,
+        block,
+        range,
         agility
     ]
 
-    while scene_id != 10:
+    while scene_id != 9:
         scene_id = scene_list[scene_id](screen)
 
     pygame.quit()
