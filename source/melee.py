@@ -26,6 +26,7 @@ hrac=pygame.image.load("sprites/hrac.png")
 hvezda=pygame.image.load("sprites/star.png")
 jabko=pygame.image.load("sprites/apple.png")
 uder=pygame.image.load("sprites/uder.png")
+kruh=pygame.image.load("sprites/kruh.png")
 uder=pygame.transform.scale(uder,(200,200))
 hrac=pygame.transform.scale(hrac,(100,100))
 uder_nahoru=pygame.transform.rotate(uder,90)
@@ -84,7 +85,7 @@ while True:
             a-=1
         a+=1
     a=0
-    if timer2==0:
+    if timer2==0 or True:
         if stisknute_klavesy[pygame.K_UP]:
             timer2=10
             if not rotace:
@@ -95,7 +96,7 @@ while True:
                 okno.blit(uder_nahoru,(rozliseni_okna[0]/2-140, rozliseni_okna[1]*2/3-230))
             while len(nahore)!=0:
                 if nahore[0]<20:
-                    if 20>nahore[0]>15:
+                    if 19>nahore[0]>17:
                         score+=1
                     score+=1
                     nahore.remove(nahore[0])
@@ -107,7 +108,7 @@ while True:
             rotace=False
             while len(vpravo)!=0:
                 if vpravo[0]<20:
-                    if 20>vpravo[0]>15:
+                    if 19>vpravo[0]>17:
                         score+=1
                     score+=1
                     vpravo.remove(vpravo[0])
@@ -120,7 +121,7 @@ while True:
             a=0
             while len(vlevo)!=0:
                 if vlevo[a]<20:
-                    if 20>vlevo[0]>15:
+                    if 19>vlevo[0]>17:
                         score+=1
                     score+=1
                     vlevo.remove(vlevo[0])
@@ -148,13 +149,17 @@ while True:
 
     
    
+   
+    okno.blit(kruh,(418,432))
+    okno.blit(kruh,(680,432))
+    okno.blit(kruh,(418,432))
     a=0
     while a!=len(nahore):
         okno.blit(jabko,(rozliseni_okna[0]/2,-nahore[a]*rychlost+rozliseni_okna[1]*2/3-70))
         a+=1
     a=0
     while a!=len(vpravo):
-        okno.blit(jabko,((vpravo[a]+90)*rychlost,rozliseni_okna[1]/5*3))
+        okno.blit(jabko,((vpravo[a]+90)*rychlost-30,rozliseni_okna[1]/5*3))
         a+=1
     a=0
     while a!=len(vlevo):
