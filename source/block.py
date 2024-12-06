@@ -143,7 +143,9 @@ while True:
         print(region)
         print(d)
     while a<len(jabka):#detekce trefení jablek
-        if jabka[a][5]<0:
+        if jabka[a][5]<-40:
+            jabka.remove(jabka[a])
+        elif -5<jabka[a][5]<0:
             if jabka[a][6]==False:
                 if score>save[20]:
                     save[20]=score
@@ -169,12 +171,16 @@ while True:
                     x*=-1
                     
                 
-                if jabka[a][7]==region or jabka[a][7]+x==region:
+                if jabka[a][5]>0 and (jabka[a][7]==region or jabka[a][7]+x==region):
                     #print(jabka[a][2])
                     b=0
                     if jabka[a][6]==False:
                         score+=1
-                    jabka.remove(jabka[a])
+                    jabka[a][3]*=-1
+                    jabka[a][4]*=-1
+                    jabka[a][5]*=-1
+                    
+                    
                 #else:
                  #   print(jabka[a][2])
                   #  print("jabka reg ",jabka[a][7])

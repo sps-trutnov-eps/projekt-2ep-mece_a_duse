@@ -27,24 +27,23 @@ You are tasked with developing a copycat game of "Swords & Souls: Neverseen" in 
 
 ### Arena
 - Create an infinite strategic arena where players can face enemies.
-- Each battle allows players to fight up to three enemies and select which to attack.
-- Define the logic for enemies dropping experience and money calculated using the formula 2^(enemy level / 32).
-- Levels of the enemy rise widht the curent level.
-- Calculate player's level based on experience using the formula: player's experience / 2^(player's level / 32).
-- Implement special attacks and their effects, unlocked every 20 levels:
-  - Triple attack (Triple normal attack)
-  - Stun (Stun player for 5 turns)
-  - Poison (Deals 75% of normal attack for 5 turns)
-  - Heal (Heals the player by 50%)
-  - Magic armor (Increse armor by 25%)
+- Each battle allows players to five enemies.
+- Define the logic for enemies dropping money and experience.
+- Levels of the enemy rise with the current level.
+- Calculate player's level based on experience using the formula: 100+1.5**level/2
+- Implement special attacks and their effects, unlocked every 10 levels:
+  - Double attack (Double normal attack)
+  - Stun (Stun enemy for 5 turns)
+  - Poison (Deals 25% damage of normal attack every turn)
+  - Heal (Heals the player by 25%)
+  - Magic armor (decreases damage taken by 80% for 5 turns)
   - Vampirism (Increase you health by the damage dealt)
-  - Impatient (Decrese skill couldown)
-  - Deadly (25% chance for instakill, reloading ever 5 levels)
-- Introduce a 10% critical hit chance to inflict 10x damage on enemies.
-- Provide five potions of each type:
-  - HP (Restores your HP)
+  - Deadly (10 times normal attack)
+- Provide four potions of each type:
+  - HP (Restores 50% of your HP)
   - Energy (Restores all your special attacks)
-  - Strengh (Doubles your damage)
+  - Strength (Doubles your damage)
+  - shield (Magic shield but better)
 
 ### Training
 - Set up a training menu with buttons labeled from Melee to Agility plus a back button for navigation.

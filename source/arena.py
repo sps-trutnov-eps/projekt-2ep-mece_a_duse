@@ -73,10 +73,13 @@ schopnosti=[0,0,0,0,0,0,0]
 
 shield=1-save[5]/10
 luk=round(math.log(save[14])*5,0)#  %
+stit=round(math.log(save[13])*5,0)
 luk_demage=save[14]*save[6]
 smer=5
 priste=0
 a=0
+b=0
+c=0
 total_demage=save[16]
 dodge=round(math.log(save[15]*5))
 hrac_demage=hrac_demage*save[3]
@@ -88,6 +91,7 @@ porazeno=0
 
 #uder mece
 def mec(a,b,uder,screen):#hráč=True, priste,uder,screen
+    print("uder")
     if a:
         d=740
         if b==0:
@@ -123,7 +127,6 @@ font=pygame.font.Font(None, 40)
 pop=[0,0,0,0,0,0]#enemy dem t,hrac dem t,poison dem t
 
 font2=pygame.font.Font(None, 20)
-
 while True:
     
     for udalost in pygame.event.get():
@@ -155,7 +158,9 @@ while True:
     stisknute_klavesy = pygame.key.get_pressed()
     timer+=1
     if utocim and smer!=0:
+        #print("a")
         if 199<hrac_x<500:#pohyb hrace
+            #print("b")
             screen.blit(pozadi,(0,0))
             if hrac_x==200 and smer==5:
                 if luk>random.randint(0,100):
@@ -165,13 +170,16 @@ while True:
             timer=0
         else:
             if timer<2 and hrac_x>400:
+                #print("mozna")
                 mec(True,priste,uder,screen) #animace
                 screen.blit(pozadi,(0,0))
             else:
                 if hrac_x<400:
+                    #print("otocka")
                     utocim=False
-                    hrac_x-=smer
+                    hrac_x=200
                 else:
+                    #print("demage")
                     if priste!=4 and priste!=5 and priste!=6:
                         pop[3]=60
                     if buff[4]!=0:
@@ -185,8 +193,6 @@ while True:
                         total_demage+=hrac_demage*2
                         pop[2]=hrac_demage*2
                     elif priste==2:#shiel utok
-                        enemy_zivoty-=hrac_demage/2
-                        total_demage+=hrac_demage/2
                         buff[0]=5
                         pop[2]="bonk"
                     elif priste==3:#poison
@@ -233,10 +239,12 @@ while True:
                     #print("uder h")
 
     elif buff[0]!=0:
+        #print("spravna otocka")
+        #print(hrac_x,utocim,smer)
         smer*=-1
         utocim=True
     elif not utocim:#pohyb nepritele
-         
+         #print("taddy")
          if 721>enemy_x>400:
              screen.blit(pozadi,(0,0))
              enemy_x+=smer
@@ -249,34 +257,33 @@ while True:
                 utocim=True
                 enemy_x-=smer
              else:
-                 if enemy_x>600:
-                    utocim=True
-                    enemy_x-=smer
-                 else:
-                    pop[1]=60
-                    if random.randint(0,100)<dodge:
-                        pop[0]=0
-                    elif buff[1]>0:
-                        hrac_zivoty+=enemy_demage
-                        pop[0]=-enemy_demage
+                pop[1]=60
+                if random.randint(0,100)<dodge:
+                    print("dodge")
+                    c=20
+                    pop[0]=0
+                elif buff[1]>0:
+                    hrac_zivoty+=enemy_demage
+                    pop[0]=-enemy_demage
+                else:
+                    if buff[2]>0:#pocitani demage
+                        hrac_zivoty-=enemy_demage/5
+                        pop[0]=enemy_demage/5
+                    elif random.randint(0,100)<stit:
+                        hrac_zivoty-=enemy_demage/shield
+                        pop[0]=enemy_demage/shield
+                        print("block")
                     else:
-                        if buff[2]>0:#pocitani demage
-                            hrac_zivoty-=enemy_demage/5
-                            pop[0]=enemy_demage/5
-                        elif 1==random.randint(1,5):
-                            hrac_zivoty-=enemy_demage/shield
-                            pop[0]=enemy_demage/shield
-                            #print("block")
-                        else:
-                            hrac_zivoty-=enemy_demage
-                            pop[0]+=enemy_demage
-                    if hrac_zivoty>hrac_max_zivoty:
-                        hrac_zivoty=hrac_max_zivoty
-                        
-                    #print("uder e")
-                    smer=smer*-1
-                    enemy_x+=smer
-    elif smer==0:#střelba z luku
+                        hrac_zivoty-=enemy_demage
+                        pop[0]+=enemy_demage
+                if hrac_zivoty>hrac_max_zivoty:
+                    hrac_zivoty=hrac_max_zivoty
+                    
+                #print("uder e")
+                smer=smer*-1
+                enemy_x+=smer
+    if smer==0:#střelba z luku
+        #print("strelba")
         screen.blit(pozadi,(0,0))
         if timer<30:
             screen.blit(hrac_luk,(200,SCREEN_RESOLUTION[1]/2))
@@ -287,8 +294,16 @@ while True:
             pop[3]=10
             pop[2]=luk_demage
             smer=5
+    if c>1:
+        c-=1
+        hrac_x=100
+    elif c==1:
+        c-=1   
+        hrac_x=201
+    else:
+        pass
+        
             
-
     mys=pygame.mouse.get_pos()
     if stisknute_klavesy[pygame.K_1] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 330<mys[0]<400):#aktivace specialních utoků
         if schopnosti[0]==0 and priste==0:
@@ -339,8 +354,8 @@ while True:
             print("porazil jsi jednoho")
             buff[0]=0
             buff[3]=0
-            save[0]+=random.randint(0,uroven*10)#novy nepritel
-            save[2]+=random.randint(0,round(100+1.4**save[1]/2,0))
+            save[0]+=random.randint(0,uroven*2)#novy nepritel
+            save[2]+=random.randint(0,round(100+1.5**save[23],0))
             if save[2]>100+1.5**save[1]/2:
                 save[2]-=round(100+1.5**save[1]/2,0)
                 save[2]=int(save[2])
@@ -458,21 +473,25 @@ while True:
         screen.blit(text,(380,550))
     
     
-    pygame.draw.rect(screen,(255,0,0),(200,SCREEN_RESOLUTION[1]/4*3,hrac_zivoty/(hrac_max_zivoty/150),10))
-    pygame.draw.rect(screen,(255,0,0),(700,SCREEN_RESOLUTION[1]/4*3,enemy_zivoty/(enemy_max_zivoty/150),10))
+    pygame.draw.rect(screen,(255,0,0),(200,SCREEN_RESOLUTION[1]/4*3,hrac_zivoty/hrac_max_zivoty*150,10))
+    pygame.draw.rect(screen,(255,0,0),(700,SCREEN_RESOLUTION[1]/4*3,enemy_zivoty/enemy_max_zivoty*150,10))
     text=font2.render(str(hrac_zivoty)+"/"+str(hrac_max_zivoty), True, (0,0,0))
     screen.blit(text, (250,SCREEN_RESOLUTION[1]/4*3))
     text=font2.render(str(enemy_zivoty)+"/"+str(enemy_max_zivoty), True, (0,0,0))
     screen.blit(text, (750,SCREEN_RESOLUTION[1]/4*3))
     a=save[0]
-    while a>10000:
+    b=0
+    while a>10:
         a/=10
-        a=round(a,0)
-    text=font.render(str(int(a)), True, (0,0,0))
-    screen.blit(text,(SCREEN_RESOLUTION[0]-130,SCREEN_RESOLUTION[1]-40))
+        a=round(a,3)
+        b+=1
+    text=font.render(str(a)+"E"+str(b), True, (0,0,0))
+    screen.blit(text,(SCREEN_RESOLUTION[0]-150,SCREEN_RESOLUTION[1]-40))
     screen.blit(coin,(SCREEN_RESOLUTION[0]-50,SCREEN_RESOLUTION[1]-50))
-    
-    
+    pygame.draw.rect(screen,(0,0,0),(330,SCREEN_RESOLUTION[1]-110,490,30))
+    pygame.draw.rect(screen,(0,0,200),(330,SCREEN_RESOLUTION[1]-110,save[2]/(100+1.5**save[1]/2)*490,30))
+    text=font.render(str(save[1]), True, (255,255,255))
+    screen.blit(text,(SCREEN_RESOLUTION[0]/2,SCREEN_RESOLUTION[1]-105))
     
     if smer!=0 or timer>30:
         screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))
