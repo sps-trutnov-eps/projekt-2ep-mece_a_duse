@@ -14,7 +14,7 @@ def museum(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše: Character')
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
-    character_texts = ['Maximální úroveň: ' + str(), 'Poražený nepřítel: ' + str(data[17]), 'Celkový demage: ' + str(data[16]), 'Pocet smrti' + str(), 'Melle rekord: ' + str(data[19]), 'Block rekord: ' + str(data[20]), 'Range rekord: ' + str(data[21]), 'Agility rekord: ' + str(data[22])]
+    character_texts = ['Maximální úroveň: ' + str(data[23]), 'Poražený nepřítel: ' + str(data[17]), 'Celkový demage: ' + str(data[16]), 'Počet smrtí: ' + str(data[18]), 'Melee rekord: ' + str(data[19]), 'Block rekord: ' + str(data[20]), 'Range rekord: ' + str(data[21]), 'Agility rekord: ' + str(data[22])]
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2
     buttons = [

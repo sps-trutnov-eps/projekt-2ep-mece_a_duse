@@ -73,6 +73,7 @@ def main(scene_id: int = 0) -> None:
 
     scene_list = [
         menu,
+        menu,
         arena,
         training,
         shop,
@@ -83,9 +84,8 @@ def main(scene_id: int = 0) -> None:
         agility
     ]
 
-    while scene_id != 9:
+    while scene_id != 10:
         scene_id = scene_list[scene_id](screen)
-
     pygame.quit()
 
 if __name__ == '__main__':
