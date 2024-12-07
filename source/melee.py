@@ -85,7 +85,7 @@ while True:
             a-=1
         a+=1
     a=0
-    if timer2==0 or True:
+    if timer2==0:
         if stisknute_klavesy[pygame.K_UP]:
             timer2=10
             if not rotace:
@@ -96,8 +96,8 @@ while True:
                 okno.blit(uder_nahoru,(rozliseni_okna[0]/2-140, rozliseni_okna[1]*2/3-230))
             while len(nahore)!=0:
                 if nahore[0]<20:
-                    if 19>nahore[0]>17:
-                        score+=1
+                    #if 19>nahore[0]>17:
+                     #   score+=1
                     score+=1
                     nahore.remove(nahore[0])
                 else:
@@ -147,12 +147,12 @@ while True:
             file.writelines(lines)
         #return 0#Pavle Tady to přepiš!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    
+
    
    
-    okno.blit(kruh,(418,432))
-    okno.blit(kruh,(680,432))
-    okno.blit(kruh,(418,432))
+    #okno.blit(kruh,(418,432))
+    #okno.blit(kruh,(680,432))
+    #okno.blit(kruh,(418,432))
     a=0
     while a!=len(nahore):
         okno.blit(jabko,(rozliseni_okna[0]/2,-nahore[a]*rychlost+rozliseni_okna[1]*2/3-70))
@@ -166,9 +166,8 @@ while True:
         okno.blit(jabko,((100-vlevo[a])*rychlost-100,rozliseni_okna[1]/5*3))
         a+=1
     a=0
-    text=font.render(str(score),True ,(0,0,0))
-    okno.blit(text,(150,100))
-    
+    text=font.render(str(score),True ,(0,0,0))#score
+    okno.blit(text,(900,120))
     if rotace:
         hrac=pygame.transform.flip(hrac,True,False)
         okno.blit(hrac,(rozliseni_okna[0]/2-25, rozliseni_okna[1]*2/3-70))

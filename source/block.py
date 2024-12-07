@@ -207,7 +207,7 @@ while True:
         
         
     text=font.render(str(score),True ,(0,0,0))#score
-    okno.blit(text,(150,100))
+    okno.blit(text,(900,120))
     a=0
     while a<len(jabka):#vykreslování jablek
         if jabka[a][6]==False:

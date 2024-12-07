@@ -87,7 +87,7 @@ buff=[0,0,0,0,0]#stun,heal,sheild,poison,strenght
 #potion#demageboost,heal,cooldowrecharg,shield
 
 porazeno=0
-
+stit=100
 
 #uder mece
 def mec(a,b,uder,screen):#hráč=True, priste,uder,screen
@@ -119,9 +119,14 @@ def mec(a,b,uder,screen):#hráč=True, priste,uder,screen
         pygame.display.update()
         clock.tick(60)
         c-=1
-
-
-
+def stiit(stit,screen):
+    stit=pygame.transform.scale(stit,(150,150))
+    screen.blit(stit,(200,360))
+    a=10
+    while a>0:
+        a-=1
+        pygame.display.update()
+        clock.tick(60)
 
 font=pygame.font.Font(None, 40)
 pop=[0,0,0,0,0,0]#enemy dem t,hrac dem t,poison dem t
@@ -252,7 +257,10 @@ while True:
          else:
              if timer<2 and enemy_x<600:
                  mec(utocim,0,uder,screen)#animace enemy
-                 screen.blit(pozadi,(0,0))
+                 if random.randint(0,100)<stit:
+                     b=1
+                 else:
+                     screen.blit(pozadi,(0,0))
              if enemy_x>600:
                 utocim=True
                 enemy_x-=smer
@@ -269,7 +277,8 @@ while True:
                     if buff[2]>0:#pocitani demage
                         hrac_zivoty-=enemy_demage/5
                         pop[0]=enemy_demage/5
-                    elif random.randint(0,100)<stit:
+                    elif b==1:
+                        stiit(icony[4],screen)
                         hrac_zivoty-=enemy_demage/shield
                         pop[0]=enemy_demage/shield
                         print("block")
