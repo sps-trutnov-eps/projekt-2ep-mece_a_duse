@@ -15,6 +15,8 @@ def agility(screen: pygame.Surface) -> int:
     # Load images
     player_image = pygame.image.load('sprites/hrac sam.png')
     apple_image = pygame.image.load('sprites/apple.png')
+    pozadi=pygame.image.load("sprites/pozadi.png")
+    font=pygame.font.Font(None, 64) 
 
     # Scale images
     player_image = pygame.transform.scale(player_image, (128, 128))
@@ -47,7 +49,7 @@ def agility(screen: pygame.Surface) -> int:
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                return 10
 
         # Player movement
         keys = pygame.key.get_pressed()
@@ -84,7 +86,7 @@ def agility(screen: pygame.Surface) -> int:
                 apples_x.append(apple)
             else:
                 apples_y.append(apple)
-            if apple_frequency > 120:
+            if apple_frequency > 60:
                 apple_frequency -= 5
                 apple_speed = 4 + int((180 - apple_frequency) * 0.05)
 
@@ -106,6 +108,8 @@ def agility(screen: pygame.Surface) -> int:
                 score += 1
 
         # Check for collisions
+        
+        #pavle předělej to ať tě to nevyhazuje když trefíš jabko
         for apple in apples_x:
             if player.colliderect(apple):
                 with open("data.txt", "r") as file:
@@ -113,8 +117,9 @@ def agility(screen: pygame.Surface) -> int:
                     if input[22] < score:
                         input[22] = score
                     input[16] = (input[16] + score)
+                input = [str(item)+"\n" for item in input]
                 with open("data.txt", "w") as file:
-                    file.write(input)
+                     file.writelines(input)
                 return 3
         for apple in apples_y:
             if player.colliderect(apple):
@@ -123,8 +128,9 @@ def agility(screen: pygame.Surface) -> int:
                     if input[22] < score:
                         input[22] = score
                     input[16] = (input[16] + score)
+                input = [str(item)+"\n" for item in input]
                 with open("data.txt", "w") as file:
-                    file.write(input)
+                     file.writelines(input)
                 return 3
         for apple in apples__x:
             if player.colliderect(apple):
@@ -133,12 +139,15 @@ def agility(screen: pygame.Surface) -> int:
                     if input[22] < score:
                         input[22] = score
                     input[16] = (input[16] + score)
+                input = [str(item)+"\n" for item in input]
                 with open("data.txt", "w") as file:
-                    file.write(input)
+                   file.writelines(input)
                 return 3
 
         # Draw everything
-        screen.fill(WHITE)
+        screen.blit(pozadi,(0,0))
+        text=font.render(str(score),True ,(0,0,0))
+        screen.blit(text,(900,120))
         screen.blit(player_image, (player.x, player.y))
         for apple in apples_x:
             screen.blit(apple_image, (apple.x, apple.y))

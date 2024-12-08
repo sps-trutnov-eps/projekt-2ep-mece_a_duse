@@ -29,7 +29,7 @@ def training(screen: pygame.Surface) -> int:
                     if i != 4:
                         return i + 6
                     else:
-                        return 10
+                        return 0
 
         screen.fill(BLACK)
         for button in buttons:

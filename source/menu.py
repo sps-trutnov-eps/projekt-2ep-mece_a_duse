@@ -29,7 +29,7 @@ def menu(screen: pygame.Surface) -> int:
                     if i != 5:
                         return i + 1
                     else:
-                        return 9
+                        return 10
 
         screen.fill(BLACK)
         for button in buttons:
