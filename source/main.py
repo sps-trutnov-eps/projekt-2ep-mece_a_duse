@@ -92,4 +92,3 @@ def main(scene_id: int = 0) -> None:
 if __name__ == '__main__':
     main()
     exit(0)
-
