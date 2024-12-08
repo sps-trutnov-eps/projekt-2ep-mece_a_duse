@@ -55,8 +55,8 @@ def melee(screen: pygame.Surface) -> int:
         while a!= len(nahore):
             nahore[a]-=1
             if nahore[a]==0:
-                if score>save[20]:
-                    save[20]=score
+                if score>save[19]:
+                    save[19]=score
                 save[11]+=score
                 score=0
                 nahore.remove(0)
@@ -66,8 +66,8 @@ def melee(screen: pygame.Surface) -> int:
         while a!= len(vpravo):
             vpravo[a]=vpravo[a]-1
             if vpravo[a]==0:
-                if score>save[20]:
-                    save[20]=score
+                if score>save[19]:
+                    save[19]=score
                 save[11]+=score
                 score=0
                 vpravo.remove(0)
@@ -77,8 +77,8 @@ def melee(screen: pygame.Surface) -> int:
         while a!= len(vlevo):
             vlevo[a]=vlevo[a]-1
             if vlevo[a]==0:
-                if score>save[20]:
-                    save[20]=score
+                if score>save[19]:
+                    save[19]=score
                 save[11]+=score
                 score=0
                 vlevo.remove(0)
@@ -145,7 +145,7 @@ def melee(screen: pygame.Surface) -> int:
                 
             with open("data.txt", "w") as file:
                 file.writelines(lines)
-            return 3#Pavle Tady to přepiš!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            return 3
 
 
        

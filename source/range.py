@@ -83,17 +83,16 @@ def range(screen: pygame.Surface) -> int:
          
          
         if b: 
-            if score>save[20]: 
-                save[20]=score 
-            save[12]+=score 
-            save[13]+=score 
+            if score>save[21]: 
+                save[21]=score 
+            save[14]+=score 
+            save[14]+=score 
             score=0 
              
              
              
              
-        if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni minihry 
-            print("konec")         
+        if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni minihry          
             with open("data.txt", "r") as file: 
                 lines = file.readlines() 
                  
@@ -105,7 +104,7 @@ def range(screen: pygame.Surface) -> int:
                  
             with open("data.txt", "w") as file: 
                 file.writelines(lines) 
-            return 3#Pavle Tady to přepiš!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!         
+            return 3     
              
              
              

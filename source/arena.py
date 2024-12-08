@@ -25,7 +25,6 @@ def arena(screen: pygame.Surface) -> int:
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
     clock = pygame.time.Clock()
     hrac=pygame.image.load("sprites/hrac.png")
-    enemy=pygame.image.load("sprites/hrac sam.png")
     pozadi=pygame.image.load("sprites/arena.png")
     hrac_luk=pygame.image.load("sprites/hrac s lukem.png")
     sip=pygame.image.load("sprites/šíp.png")
@@ -48,9 +47,8 @@ def arena(screen: pygame.Surface) -> int:
     #print(save)
     hrac_luk=pygame.transform.scale(hrac_luk,(150,150))
     sip=pygame.transform.scale(sip,(100,100))
-    enemy=pygame.transform.scale(enemy,(150,150))
-    enemy=pygame.transform.flip(enemy,True,False)
     hrac=pygame.transform.scale(hrac,(150,150))
+    enemy=pygame.transform.flip(hrac,True,False)
     utocim=True
     timer=0
     hrac_x=SCREEN_RESOLUTION[0]/3-160
@@ -79,17 +77,15 @@ def arena(screen: pygame.Surface) -> int:
     a=0
     b=0
     c=0
-    total_demage=save[16]
     dodge=round(math.log(save[15]*5))
     hrac_demage=hrac_demage*save[3]
     buff=[0,0,0,0,0]#stun,heal,sheild,poison,strenght
     #potion#demageboost,heal,cooldowrecharg,shield
 
     porazeno=0
-
     #uder mece
     def mec(a,b,uder,screen):#hráč=True, priste,uder,screen
-        print("uder")
+        #print("uder")
         if a:
             d=740
             if b==0:
@@ -142,9 +138,7 @@ def arena(screen: pygame.Surface) -> int:
                         buff[4]+=10#bonus demage
                 elif 190<mys[0]<230 and save[8]!=0:
                     save[8]-=1
-                    hrac_zivoty+=hrac_max_zivoty/2
-                    if hrac_zivoty>hrac_max_zivoty:#heal
-                        hrac_zivoty=hrac_max_zivoty
+                    hrac_zivoty=hrac_max_zivoty#heal
                 elif 230<mys[0]<270 and save[9]!=0:
                     save[9]-=1
                     a=0
@@ -189,18 +183,18 @@ def arena(screen: pygame.Surface) -> int:
                             hrac_demage=hrac_demage*2
                         if priste==0:#utok
                             enemy_zivoty-=hrac_demage
-                            total_demage+=hrac_demage
+                            save[16]+=hrac_demage
                             pop[2]=hrac_demage
                         if priste==1:#double utok
                             enemy_zivoty-=hrac_demage*2
-                            total_demage+=hrac_demage*2
+                            save[16]+=hrac_demage*2
                             pop[2]=hrac_demage*2
                         elif priste==2:#shiel utok
                             buff[0]=5
                             pop[2]="bonk"
                         elif priste==3:#poison
                             enemy_zivoty-=hrac_demage/2
-                            total_demage+=hrac_demage/2
+                            save[16]+=hrac_demage/2
                             pop[2]=hrac_demage/2
                             buff[3]+=1
                         elif priste==4:#heal
@@ -213,7 +207,7 @@ def arena(screen: pygame.Surface) -> int:
                             buff[1]=5
                         elif priste==7:#super utok
                             enemy_zivoty-=hrac_demage*10
-                            total_demage+=hrac_demage*10
+                            save[16]+=hrac_demage*10
                             pop[2]=hrac_demage*10
                         smer=smer*-1
                         hrac_x+=smer
@@ -229,7 +223,7 @@ def arena(screen: pygame.Surface) -> int:
                             hrac_demage=hrac_demage/2
                         if buff[3]>0:
                             enemy_zivoty-=hrac_demage*buff[3]/4
-                            total_demage+=hrac_demage*buff[3]/4
+                            save[16]+=hrac_demage*buff[3]/4
                             pop[4]=hrac_demage*buff[3]/4
                             pop[5]=60
                         else:
@@ -265,7 +259,7 @@ def arena(screen: pygame.Surface) -> int:
                  else:
                     pop[1]=60
                     if random.randint(0,100)<dodge:
-                        print("dodge")
+                        #print("dodge")
                         c=20
                         pop[0]=0
                     elif buff[1]>0:
@@ -279,7 +273,7 @@ def arena(screen: pygame.Surface) -> int:
                             stiit(icony[4],screen)
                             hrac_zivoty-=enemy_demage/shield
                             pop[0]=enemy_demage/shield
-                            print("block")
+                            #print("block")
                         else:
                             hrac_zivoty-=enemy_demage
                             pop[0]+=enemy_demage
@@ -347,34 +341,38 @@ def arena(screen: pygame.Surface) -> int:
 
 
         a=0
-        if hrac_zivoty<0:
-            a=1
-            print("prohra")
-        elif enemy_zivoty<0:
-            porazeno+=1
-            save[17]+=1
-            if porazeno>len(enemaci)-1:
-                save[23]+=1
+        if hrac_x<205 and enemy_x>715:
+            if hrac_zivoty<0:
                 a=1
-                print("výhra")
-            else:
-                print("porazil jsi jednoho")
-                buff[0]=0
-                buff[3]=0
-                save[0]+=random.randint(0,uroven*2)#novy nepritel
-                save[2]+=random.randint(0,round(100+1.5**save[23],0))
-                if save[2]>100+1.5**save[1]/2:
-                    save[2]-=round(100+1.5**save[1]/2,0)
-                    save[2]=int(save[2])
-                    save[1]+=1
-                enemy_max_zivoty=enemaci[porazeno]**2
-                enemy_zivoty=enemy_max_zivoty
-                enemy_demage=round(enemaci[porazeno]**1.4)+1
-                enemy_demage=enemy_demage-enemy_demage/10*save[4]
-
+                save[18]+=1
+                #print("prohra")
+            elif enemy_zivoty<0:
+                porazeno+=1
+                save[17]+=1
+                if porazeno>len(enemaci)-1:
+                    save[23]+=1
+                    a=1
+                    #print("výhra")
+                else:
+                    #print("porazil jsi jednoho")
+                    buff[0]=0
+                    buff[3]=0
+                    save[0]+=random.randint(0,uroven*2)+uroven#novy nepritel
+                    save[2]+=random.randint(0,round(100+1.5**save[23],0))
+                    if save[2]>100+1.5**save[1]/2:
+                        save[2]-=round(100+1.5**save[1]/2,0)
+                        save[2]=int(save[2])
+                        save[1]+=1
+                    enemy_max_zivoty=enemaci[porazeno]**2
+                    enemy_zivoty=enemy_max_zivoty
+                    enemy_demage=round(enemaci[porazeno]**1.4)+1
+                    enemy_demage=enemy_demage-enemy_demage/10*save[4]
+                    utocim=True
+                    smer*=-1
+                    
         
         if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or a==1 or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni areny
-            print("konec")        
+            #print("konec")        
             with open("data.txt", "r") as file:
                 lines = file.readlines()
                 
@@ -386,7 +384,7 @@ def arena(screen: pygame.Surface) -> int:
                 
             with open("data.txt", "w") as file:
                 file.writelines(lines)
-            return 0#Pavle Tady to přepiš!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            return 0
         a=0
         
         
@@ -488,18 +486,22 @@ def arena(screen: pygame.Surface) -> int:
         screen.blit(text, (750,SCREEN_RESOLUTION[1]/4*3))
         a=save[0]
         b=0
-        while a>10:
-            a/=10
-            a=round(a,3)
-            b+=1
-        text=font.render(str(a)+"E"+str(b), True, (0,0,0))
+        if a>1000:
+            while a>10:
+                a/=10
+                a=round(a,3)
+                b+=1
+            text=font.render(str(a)+"E"+str(b), True, (0,0,0))
+        else:
+            text=font.render(str(a), True, (0,0,0))
         screen.blit(text,(SCREEN_RESOLUTION[0]-150,SCREEN_RESOLUTION[1]-40))
         screen.blit(coin,(SCREEN_RESOLUTION[0]-50,SCREEN_RESOLUTION[1]-50))
         pygame.draw.rect(screen,(0,0,0),(330,SCREEN_RESOLUTION[1]-110,490,30))
         pygame.draw.rect(screen,(0,0,200),(330,SCREEN_RESOLUTION[1]-110,save[2]/(100+1.5**save[1]/2)*490,30))
         text=font.render(str(save[1]), True, (255,255,255))
         screen.blit(text,(SCREEN_RESOLUTION[0]/2,SCREEN_RESOLUTION[1]-105))
-        
+        text=font.render("boj: "+str(save[23]),True,(0,0,0))
+        screen.blit(text,(480,64))
         if smer!=0 or timer>30:
             screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))
         screen.blit(enemy,(enemy_x,SCREEN_RESOLUTION[1]/2))

@@ -24,6 +24,7 @@ def shop(screen: pygame.Surface) -> int:
     font=pygame.font.Font(None, 40)
     a=0
     b=0
+    c=0
     with open('data.txt', 'r') as filein, open('data.txt', 'r') as fileout:
         data = filein.read().splitlines()
         data = [int(item) for item in data]
@@ -36,8 +37,8 @@ def shop(screen: pygame.Surface) -> int:
                 if button.handle_event(event):
                     if i == 4:
                         return 0
-                    if data[i + 3] < 10 and 1.5*10**data[i+3] <= data[0]:
-                        data[0]-=1.5*10**data[i+3]
+                    if data[i + 3] < 10 and 20**data[i+3] <= data[0]:
+                        data[0]-=20**data[i+3]
                         data[i + 3] += 1
                     data[0]=int(data[0])
                     with open("data.txt", "w") as file:
@@ -47,17 +48,30 @@ def shop(screen: pygame.Surface) -> int:
         for button in buttons:
             button.draw(screen)
         a=data[0]
-        b=0
-        while a>10:
-            a/=10
-            a=round(a,3)
-            b+=1
-        text=font.render(str(a)+"E"+str(b), True, (255,255,255))
+        if a>1000:
+            b=0
+            while a>10:
+                a/=10
+                a=round(a,3)
+                b+=1
+            text=font.render(str(a)+"E"+str(b), True, (255,255,255))
+        else:
+            text=font.render(str(a), True, (255,255,255))
         screen.blit(text,(SCREEN_RESOLUTION[0]-150,SCREEN_RESOLUTION[1]-40))
         screen.blit(coin,(SCREEN_RESOLUTION[0]-50,SCREEN_RESOLUTION[1]-50))
         b=0
+        a=0
+        c=0
         while b<4:
-            text=font.render("1.5E"+str(data[3+b]), True, (255,255,255))
+            a=20**(int(data[b+3]))
+            c=0
+            if a>1000:
+                while a>10:
+                    a=round(a/10,3)
+                    c+=1
+                text=font.render(str(a)+"E"+str(c), True, (255,255,255))
+            else:
+                text=font.render(str(a), True, (255,255,255))
             screen.blit(text,(SCREEN_RESOLUTION[0]/2+80,220+b*65))
             b+=1
         

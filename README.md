@@ -40,7 +40,7 @@ You are tasked with developing a copycat game of "Swords & Souls: Neverseen" in 
   - **Vampirism**: Increase you health by the damage dealt.
   - **Deadly**: 10 times normal attack.
 - Provide four potions of each type:
-  - **HP**: Restores 50% of your HP.
+  - **HP**: Restores all HP.
   - **Energy**: Restores all your special attacks.
   - **Strength**: Doubles your damage.
   - **Shield**: Magic shield but better.

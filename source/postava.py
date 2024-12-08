@@ -15,8 +15,8 @@ def postava(screen: pygame.Surface) -> int:
     clock = pygame.time.Clock()
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
-    character_texts = ['poníze: : ' + str(data[0]),  'demage: ' + str(data[11]), 'štít: ' + str(data[13]), 'luk: ' + str(data[14]), 'Agility: ' + str(data[15]), 'potion 1: ' + str(data[7]), 'potion 2: ' + str(data[8])]
-    character_texts2= ['level: ' + str(data[1]), 'výzboroj brnění: ' + str(data[4]), 'výzboroj meč: ' + str(data[3]), 'výzboroj štít: ' + str(data[5]), 'výzboroj luk: ' + str(data[6]), 'potion 3: ' + str(data[9]), 'potion 4: ' + str(data[9])]
+    character_texts = ['peníze: : ' + data[0],"životy: "+data[12],'demage: ' + data[11], 'štít: ' + data[13], 'luk: ' + data[14], 'agility: ' + data[15], 'potion 1: ' + data[7], 'potion 2: ' + data[8]]
+    character_texts2= ['level: ' + data[1],"xp: "+str(round(int(data[2])/(100+1.5**int(data[1])/2)*100,1))+"%",'výzboroj brnění: ' + data[4], 'výzboroj meč: ' + data[3], 'výzboroj štít: ' + data[5], 'výzboroj luk: ' + data[6], 'potion 3: ' + data[9], 'potion 4: ' + data[9]]
     screen_height = SCREEN_RESOLUTION[1] // 2
     buttons = [
         Button('Exit', SCREEN_RESOLUTION[0]//2, screen_height + (64 * ((len(character_texts) // 2) + 1)))

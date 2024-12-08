@@ -204,7 +204,7 @@ def block(screen: pygame.Surface) -> int:
                 
             with open("data.txt", "w") as file:
                 file.writelines(lines)
-            return 3#Pavle Tady to přepiš!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            return 3
             
             
         text=font.render(str(score),True ,(0,0,0))#score
