@@ -24,7 +24,6 @@ def arena(screen: pygame.Surface) -> int:
     #]
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
     clock = pygame.time.Clock()
-    fps = 60
     hrac=pygame.image.load("sprites/hrac.png")
     enemy=pygame.image.load("sprites/hrac sam.png")
     pozadi=pygame.image.load("sprites/arena.png")
@@ -132,7 +131,7 @@ def arena(screen: pygame.Surface) -> int:
 
     font2=pygame.font.Font(None, 20)
     while True:
-        
+        mys=pygame.mouse.get_pos()
         for udalost in pygame.event.get():
             if udalost.type == pygame.QUIT:
                 pygame.quit()
@@ -312,7 +311,7 @@ def arena(screen: pygame.Surface) -> int:
             pass
             
                 
-        mys=pygame.mouse.get_pos()
+
         if stisknute_klavesy[pygame.K_1] or (pygame.mouse.get_pressed()[0] and mys[1]>650 and 330<mys[0]<400):#aktivace specialních utoků
             if schopnosti[0]==0 and priste==0:
                 schopnosti[0]=5#double_demage
@@ -505,7 +504,7 @@ def arena(screen: pygame.Surface) -> int:
             screen.blit(hrac,(hrac_x,SCREEN_RESOLUTION[1]/2))
         screen.blit(enemy,(enemy_x,SCREEN_RESOLUTION[1]/2))
         pygame.display.update()
-        clock.tick(fps)
+        clock.tick(60)
         
 
 

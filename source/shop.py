@@ -11,6 +11,7 @@ def shop(screen: pygame.Surface) -> int:
     Returns:
         int: The selected level number, or 9 if the window is closed.
     """
+    clock = pygame.time.Clock()
     pygame.display.set_caption('Meče & Duše: Obchod')
     button_texts = ['Meč', 'Štít', 'Luk', 'Brnění', 'Exit']
     coin=pygame.image.load("sprites/coin.png")
@@ -65,4 +66,5 @@ def shop(screen: pygame.Surface) -> int:
         
         
         pygame.display.flip()
+        clock.tick(60)
 

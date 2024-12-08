@@ -33,7 +33,6 @@ def melee(screen: pygame.Surface) -> int:
     uder_nahoru=pygame.transform.rotate(uder,90)
     uder_vlevo=pygame.transform.flip(uder,True ,False )
     clock = pygame.time.Clock()
-    fps = 60
     while True:
         okno.blit(pozadi,(0,0))
         for udalost in pygame.event.get():
@@ -177,7 +176,7 @@ def melee(screen: pygame.Surface) -> int:
             okno.blit(hrac,(rozliseni_okna[0]/2-40, rozliseni_okna[1]*2/3-70))
         
         pygame.display.update()
-        clock.tick(fps)
+        clock.tick(60)
 
 
 

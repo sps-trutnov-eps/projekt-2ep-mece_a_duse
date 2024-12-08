@@ -37,7 +37,6 @@ def block(screen: pygame.Surface) -> int:
     clock = pygame.time.Clock()
     stit_rotated=stit
     image_rect = stit.get_rect(center=(0, 0))
-    fps = 60
     while True:
         okno.blit(pozadi,(0,0))
         for udalost in pygame.event.get():
@@ -221,7 +220,7 @@ def block(screen: pygame.Surface) -> int:
         okno.blit(stit_rotated, rotated_rect.topleft)
         #pygame.draw.rect(okno,(0,0,0),(posun[0]+pozice[0],posun[1]+pozice[1],10,10))
         pygame.display.update()
-        clock.tick(fps)
+        clock.tick(60)
 
 
 

@@ -10,6 +10,8 @@ def training(screen: pygame.Surface) -> int:
     Returns:
         int: The index of the selected menu option.
     """
+    
+    clock = pygame.time.Clock()
     pygame.display.set_caption('Meče & Duše')
     button_texts = ['Melee', 'Block', 'Range', 'Agility', 'Exit']
     screen_width = SCREEN_RESOLUTION[0] // 2
@@ -35,4 +37,5 @@ def training(screen: pygame.Surface) -> int:
         for button in buttons:
             button.draw(screen)
         pygame.display.flip()
+        clock.tick(60)
 

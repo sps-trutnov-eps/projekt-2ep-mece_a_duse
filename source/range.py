@@ -5,7 +5,6 @@ pygame.init()
 def range(screen: pygame.Surface) -> int:
     clock = pygame.time.Clock() 
     rozliseni_okna = (1080,720) 
-    fps = 60 
      
      
     soubor = open('data.txt', 'r', encoding = 'utf-8') 
@@ -143,5 +142,5 @@ def range(screen: pygame.Surface) -> int:
             okno.blit(strela2,(sip[1]-sip[0]*3,sip[2]-10+sip[0]*1.5)) 
          
         pygame.display.update() 
-        clock.tick(fps) 
+        clock.tick(60) 
      
