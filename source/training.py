@@ -15,7 +15,7 @@ def training(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše: Trénink')
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
-    button_texts = ['Melee' + str(data[12]), 'Block' + str(data[13]), 'Range' + str(data[14]), 'Agility' + str(data[15]), 'Zpět']
+    button_texts = ['Melee: ' + str(data[12]), 'Block: ' + str(data[13]), 'Range: ' + str(data[14]), 'Agility: ' + str(data[15]), 'Zpět']
     screen_width, screen_height = SCREEN_RESOLUTION[0] // 2, SCREEN_RESOLUTION[1] // 2
     buttons = [
         Button(text, screen_width, screen_height + (i - (len(button_texts) // 2)) * 64)
