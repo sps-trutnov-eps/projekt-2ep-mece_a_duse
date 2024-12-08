@@ -11,6 +11,7 @@ def museum(screen: pygame.Surface) -> int:
     Returns:
         int: The 0 to return to the main menu, or 9 if the window is closed.
     """
+    clock = pygame.time.Clock()
     pygame.display.set_caption('Meče & Duše: Museum')
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()

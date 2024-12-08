@@ -17,11 +17,7 @@ class Button:
         self.color = GREY
 
     def draw(self, screen: pygame.Surface) -> None:
-        """Draw the button on the screen.
-        
-        Args:
-            screen (pygame.Surface): The surface to draw the button on.
-        """
+        """Draw the button on the screen."""
         pygame.draw.rect(screen, self.color, self.rect)
         screen.blit(self.text, self.rect)
 
@@ -35,7 +31,10 @@ class Button:
             bool: True if the button is clicked, False otherwise.
         """
         if event.type == pygame.MOUSEMOTION:
-            self.color = LIGHT_GREY if self.rect.collidepoint(event.pos) else GREY
+            if self.rect.collidepoint(event.pos):
+                self.color = LIGHT_GREY
+            else:
+                self.color = GREY
         elif event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
             return True
         return False
@@ -44,23 +43,13 @@ class Text:
     """A class to represent a text in the game."""
 
     def __init__(self, text: str, x: int, y: int) -> None:
-        """Initialize the text, position, and default color.
-        
-        Args:
-            text (str): The text to display.
-            x (int): The x-cordinate of the text.
-            y (int): The y-cordinate of the text.
-        """
+        """Initialize the text, position, and default color."""
         self.font = pygame.font.Font(None, 64)
         self.text = self.font.render(text, True, WHITE)
         self.rect = self.text.get_rect(center=(x, y))
 
     def draw(self, screen: pygame.Surface) -> None:
-        """Draw the text on the screen.
-        
-        Args:
-            screen (pygame.Surface): The surface to draw the button on.
-        """
+        """Draw the text on the screen."""
         screen.blit(self.text, self.rect)
 
 def main(scene_id: int = 0) -> None:
@@ -78,13 +67,14 @@ def main(scene_id: int = 0) -> None:
     from block import block
     from range import range
     from agility import agility
+    from postava import postava
 
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
 
     scene_list = [
         menu,
-        menu,
+        postava,
         arena,
         training,
         shop,
@@ -102,3 +92,4 @@ def main(scene_id: int = 0) -> None:
 if __name__ == '__main__':
     main()
     exit(0)
+

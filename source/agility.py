@@ -39,12 +39,14 @@ def agility(screen: pygame.Surface) -> int:
     apples_x = []
     apples_y = []
     apples__x = []
-
+    with open("data.txt", "r") as file:
+        input = [int(line.strip()) for line in file]
+    
     # Game loop control
     clock = pygame.time.Clock()
     score = 0
     frame_count = 0
-
+    
     # Main game loop
     while True:
         for event in pygame.event.get():
@@ -109,41 +111,39 @@ def agility(screen: pygame.Surface) -> int:
 
         # Check for collisions
         
-        #pavle předělej to ať tě to nevyhazuje když trefíš jabko
         for apple in apples_x:
             if player.colliderect(apple):
-                with open("data.txt", "r") as file:
-                    input = [int(line.strip()) for line in file]
-                    if input[22] < score:
-                        input[22] = score
-                    input[16] = (input[16] + score)
-                input = [str(item)+"\n" for item in input]
-                with open("data.txt", "w") as file:
-                     file.writelines(input)
-                return 3
+                apples_x.remove(apple)
+                if input[22] < score:
+                    input[22] = score
+                input[15] = (input[15] + score)
+                score=0
         for apple in apples_y:
             if player.colliderect(apple):
-                with open("data.txt", "r") as file:
-                    input = [int(line.strip()) for line in file]
-                    if input[22] < score:
-                        input[22] = score
-                    input[16] = (input[16] + score)
-                input = [str(item)+"\n" for item in input]
-                with open("data.txt", "w") as file:
-                     file.writelines(input)
-                return 3
+                apples_y.remove(apple)
+                if input[22] < score:
+                    input[22] = score
+                input[15] = (input[15] + score)
+                score=0
         for apple in apples__x:
             if player.colliderect(apple):
-                with open("data.txt", "r") as file:
-                    input = [int(line.strip()) for line in file]
-                    if input[22] < score:
-                        input[22] = score
-                    input[16] = (input[16] + score)
-                input = [str(item)+"\n" for item in input]
-                with open("data.txt", "w") as file:
-                   file.writelines(input)
-                return 3
-
+                apples__x.remove(apple)
+                if input[22] < score:
+                    input[22] = score
+                input[15] = (input[15] + score)
+                score=0
+        
+        if (pygame.mouse.get_pressed()[0] and pygame.mouse.get_pos()[0]<100 and pygame.mouse.get_pos()[1]<100) or keys[pygame.K_ESCAPE]:
+            input = [str(item)+"\n" for item in input]
+            with open("data.txt", "w") as file:
+                 file.writelines(input)
+            return 3
+    
+        
+        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. já se ve tvém kódu pořádně nevyznám.
+        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. já se ve tvém kódu pořádně nevyznám.
+        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. já se ve tvém kódu pořádně nevyznám.
+            
         # Draw everything
         screen.blit(pozadi,(0,0))
         text=font.render(str(score),True ,(0,0,0))

@@ -10,6 +10,8 @@ def training(screen: pygame.Surface) -> int:
     Returns:
         int: The index of the selected menu option.
     """
+    
+    clock = pygame.time.Clock()
     pygame.display.set_caption('Meče & Duše: Trénink')
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
@@ -33,3 +35,5 @@ def training(screen: pygame.Surface) -> int:
         for button in buttons:
             button.draw(screen)
         pygame.display.flip()
+        clock.tick(60)
+
