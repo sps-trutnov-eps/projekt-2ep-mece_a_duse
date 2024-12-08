@@ -4,7 +4,7 @@ SCREEN_RESOLUTION = (1080, 720)
 WHITE = (255, 255, 255)
 LIGHT_GREY = (200, 200, 200)
 GREY = (100, 100, 100)
-BLACK = (0, 0, 0)
+BLACK = (50, 50, 50)
 
 class Button:
     """A class to represent a button in the game."""

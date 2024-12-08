@@ -15,7 +15,8 @@ def shop(screen: pygame.Surface) -> int:
     pygame.display.set_caption('Meče & Duše: Obchod')
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
-    button_texts = ['Meč' + str(data[3] + 1), 'Štít' + str(data[5] + 1), 'Luk' + str(data[6] + 1), 'Brnění' + str(data[4] + 1), 'Back']
+        data = [int(item) for item in data]
+    button_texts = ['Meč ' + str(data[3] + 1), 'Štít ' + str(data[5] + 1), 'Luk ' + str(data[6] + 1), 'Brnění ' + str(data[4] + 1), 'Back']
     coin = pygame.image.load("sprites/coin.png")
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2
@@ -27,9 +28,6 @@ def shop(screen: pygame.Surface) -> int:
     a=0
     b=0
     c=0
-    with open('data.txt', 'r') as filein, open('data.txt', 'r') as fileout:
-        data = filein.read().splitlines()
-        data = [int(item) for item in data]
     while True:
         events = pygame.event.get()
         for event in events:
@@ -74,7 +72,7 @@ def shop(screen: pygame.Surface) -> int:
                 text=font.render(str(a)+"E"+str(c), True, (255,255,255))
             else:
                 text=font.render(str(a), True, (255,255,255))
-            screen.blit(text,(SCREEN_RESOLUTION[0]/2+80,220+b*65))
+            screen.blit(text,(SCREEN_RESOLUTION[0]/2+100,220+b*65))
             b+=1
         
         

@@ -11,7 +11,7 @@ def menu(screen: pygame.Surface) -> int:
         int: The index of the selected menu option.
     """
     pygame.display.set_caption('Meče & Duše')
-    button_texts = ['Aréna', 'Trénink', 'Obchod', 'Muzeum', 'Exit']
+    button_texts = ["Postava",'Aréna', 'Trénink', 'Obchod', 'Muzeum', 'Exit']
     screen_width, screen_height = SCREEN_RESOLUTION[0] // 2, SCREEN_RESOLUTION[1] // 2
     buttons = [
         Button(text, screen_width, screen_height + (i - (len(button_texts) // 2)) * 64)
@@ -25,7 +25,7 @@ def menu(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
-                    return i + 1 if i < 4 else 9
+                    return i + 1 if i < 5 else 9
 
         screen.fill(BLACK)
         for button in buttons:

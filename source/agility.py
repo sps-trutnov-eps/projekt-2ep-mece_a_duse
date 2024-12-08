@@ -31,7 +31,7 @@ def agility(screen: pygame.Surface) -> int:
     # Apple settings
     apple_width = apple_image.get_width()
     apple_height = apple_image.get_height()
-    apple_speed = 4
+    apple_speed = 6
     apple_frequency = 180
 
     # Initialize player and apple positions
@@ -39,6 +39,9 @@ def agility(screen: pygame.Surface) -> int:
     apples_x = []
     apples_y = []
     apples__x = []
+    a=0
+    b=0
+    flip=False 
     with open("data.txt", "r") as file:
         input = [int(line.strip()) for line in file]
     
@@ -52,21 +55,34 @@ def agility(screen: pygame.Surface) -> int:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 10
-
+        b=2
         # Player movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             player.x = player_x
             player.y = player_y - player_height
+            b=a
+            a=0
+            print(a,b,flip)
         if keys[pygame.K_DOWN]:
             player.x = player_x
             player.y = player_y
+            b=a
+            a=0
+            print(a,b,flip)
         if keys[pygame.K_LEFT]:
             player.x = player_x - player_width
             player.y = player_y
+            b=a
+            a=-1
+            print(a,b,flip)
         if keys[pygame.K_RIGHT]:
             player.x = player_x + player_width
             player.y = player_y
+            b=a
+            a=1
+            print(a,b,flip)
+
 
         # Spawn apples
         if frame_count % apple_frequency == 0:
@@ -90,7 +106,7 @@ def agility(screen: pygame.Surface) -> int:
                 apples_y.append(apple)
             if apple_frequency > 60:
                 apple_frequency -= 5
-                apple_speed = 4 + int((180 - apple_frequency) * 0.05)
+                apple_speed = 6 + int((180 - apple_frequency) * 0.05)
 
         # Move apples
         for apple in apples_y[:]:
@@ -116,6 +132,7 @@ def agility(screen: pygame.Surface) -> int:
                 apples_x.remove(apple)
                 if input[22] < score:
                     input[22] = score
+                input[12]+=score
                 input[15] = (input[15] + score)
                 score=0
         for apple in apples_y:
@@ -123,6 +140,7 @@ def agility(screen: pygame.Surface) -> int:
                 apples_y.remove(apple)
                 if input[22] < score:
                     input[22] = score
+                input[12]+=score
                 input[15] = (input[15] + score)
                 score=0
         for apple in apples__x:
@@ -131,6 +149,7 @@ def agility(screen: pygame.Surface) -> int:
                 if input[22] < score:
                     input[22] = score
                 input[15] = (input[15] + score)
+                input[12]+=score
                 score=0
         
         if (pygame.mouse.get_pressed()[0] and pygame.mouse.get_pos()[0]<100 and pygame.mouse.get_pos()[1]<100) or keys[pygame.K_ESCAPE]:
@@ -140,9 +159,25 @@ def agility(screen: pygame.Surface) -> int:
             return 3
     
         
-        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. já se ve tvém kódu pořádně nevyznám.
-        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. já se ve tvém kódu pořádně nevyznám.
-        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. já se ve tvém kódu pořádně nevyznám.
+        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. Já se ve tvém kódu pořádně nevyznám.
+        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. Já se ve tvém kódu pořádně nevyznám.
+        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. Já se ve tvém kódu pořádně nevyznám.
+            
+        if b!=2 and a!=b:
+            if a==0:
+                player_image=pygame.transform.flip(player_image,True,False)
+                flip=not flip
+            elif a==-1 and not flip:
+                player_image=pygame.transform.flip(player_image,True,False)
+                flip=not flip
+            elif a==1 and flip:
+                player_image=pygame.transform.flip(player_image,True,False)
+                flip=not flip
+            
+            
+            
+            
+            
             
         # Draw everything
         screen.blit(pozadi,(0,0))
