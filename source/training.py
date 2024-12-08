@@ -10,12 +10,13 @@ def training(screen: pygame.Surface) -> int:
     Returns:
         int: The index of the selected menu option.
     """
-    pygame.display.set_caption('Meče & Duše')
-    button_texts = ['Melee', 'Block', 'Range', 'Agility', 'Exit']
-    screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts) // 2))
+    pygame.display.set_caption('Meče & Duše: Trénink')
+    with open('data.txt', 'r') as file:
+        data = file.read().splitlines()
+    button_texts = ['Melee' + str(data[12]), 'Block' + str(data[13]), 'Range' + str(data[14]), 'Agility' + str(data[15]), 'Zpět']
+    screen_width, screen_height = SCREEN_RESOLUTION[0] // 2, SCREEN_RESOLUTION[1] // 2
     buttons = [
-        Button(text, screen_width, screen_height + i * 64)
+        Button(text, screen_width, screen_height + (i - (len(button_texts) // 2)) * 64)
         for i, text in enumerate(button_texts)
     ]
 
@@ -26,13 +27,9 @@ def training(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
-                    if i != 4:
-                        return i + 6
-                    else:
-                        return 0
+                    return i + 6 if i < 4 else 0
 
         screen.fill(BLACK)
         for button in buttons:
             button.draw(screen)
         pygame.display.flip()
-

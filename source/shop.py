@@ -12,8 +12,8 @@ def shop(screen: pygame.Surface) -> int:
         int: The selected level number, or 9 if the window is closed.
     """
     pygame.display.set_caption('Meče & Duše: Obchod')
-    button_texts = ['Meč', 'Štít', 'Luk', 'Brnění', 'Exit']
-    coin=pygame.image.load("sprites/coin.png")
+    button_texts = ['Meč', 'Štít', 'Luk', 'Brnění', 'Back']
+    coin = pygame.image.load("sprites/coin.png")
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2
     buttons = [

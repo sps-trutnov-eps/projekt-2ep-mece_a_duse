@@ -11,15 +11,15 @@ def museum(screen: pygame.Surface) -> int:
     Returns:
         int: The 0 to return to the main menu, or 9 if the window is closed.
     """
-    pygame.display.set_caption('Meče & Duše: Character')
+    pygame.display.set_caption('Meče & Duše: Museum')
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
-    character_texts = ['Maximální úroveň: ' + str(data[23]), 'Poražený nepřítel: ' + str(data[17]), 'Celkový demage: ' + str(data[16]), 'Počet smrtí: ' + str(data[18]), 'Melee rekord: ' + str(data[19]), 'Block rekord: ' + str(data[20]), 'Range rekord: ' + str(data[21]), 'Agility rekord: ' + str(data[22])]
-    screen_width = SCREEN_RESOLUTION[0] // 2
-    screen_height = SCREEN_RESOLUTION[1] // 2
-    buttons = [
-        Button('Exit', screen_width, screen_height + (64 * ((len(character_texts) // 2) + 1)))
-    ]
+    character_texts = ['Maximální úroveň: ' + str(data[23]), 'Poražení nepřítelé: ' + str(data[17]),
+                       'Celkový damage: ' + str(data[16]), 'Počet úmrtí: ' + str(data[18]),
+                       'Melee rekord: ' + str(data[19]), 'Block rekord: ' + str(data[20]),
+                       'Range rekord: ' + str(data[21]), 'Agility rekord: ' + str(data[22])]
+    screen_width, screen_height = SCREEN_RESOLUTION[0] // 2, SCREEN_RESOLUTION[1] // 2
+    button = Button('Zpět', screen_width, screen_height + (64 * ((len(character_texts) // 2) + 1)))
     texts = [
         Text(text, screen_width, screen_height - (64 * ((len(character_texts) // 2) - i)))
         for i, text in enumerate(character_texts)
@@ -29,15 +29,12 @@ def museum(screen: pygame.Surface) -> int:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
-                return 10
-            for button in buttons:
-                if button.handle_event(event):
-                    return 0
+                return 9
+            elif button.handle_event(event):
+                return 0
 
         screen.fill(BLACK)
-        for button in buttons:
-            button.draw(screen)
+        button.draw(screen)
         for text in texts:
             text.draw(screen)
         pygame.display.flip()
-
