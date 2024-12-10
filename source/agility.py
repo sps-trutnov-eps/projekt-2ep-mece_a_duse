@@ -153,7 +153,7 @@ def agility(screen: pygame.Surface) -> int:
                 score=0
         
         if (pygame.mouse.get_pressed()[0] and pygame.mouse.get_pos()[0]<100 and pygame.mouse.get_pos()[1]<100) or keys[pygame.K_ESCAPE]:
-            input = [str(item)+"\n" for item in input]
+            input = [str(int(item))+"\n" for item in input]
             with open("data.txt", "w") as file:
                  file.writelines(input)
             return 3

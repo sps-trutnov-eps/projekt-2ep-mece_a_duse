@@ -140,7 +140,7 @@ def melee(screen: pygame.Surface) -> int:
             #print(len(lines))
             a=0
             while a!=len(save):
-                lines[a]=str(save[a])+"\n"
+                lines[a]=str(int(save[a]))+"\n"
                 a+=1
                 
             with open("data.txt", "w") as file:
