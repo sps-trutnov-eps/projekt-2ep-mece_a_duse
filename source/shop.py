@@ -16,7 +16,7 @@ def shop(screen: pygame.Surface) -> int:
     with open('data.txt', 'r') as file:
         data = file.read().splitlines()
         data = [int(item) for item in data]
-    button_texts = ['Meč ' + str(data[3] + 1), 'Štít ' + str(data[5] + 1), 'Luk ' + str(data[6] + 1), 'Brnění ' + str(data[4] + 1), 'Back']
+    button_texts = ['Meč ' + str(data[3]), 'Štít ' + str(data[5]), 'Luk ' + str(data[6]), 'Brnění ' + str(data[4]), 'Back']
     coin = pygame.image.load("sprites/coin.png")
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2

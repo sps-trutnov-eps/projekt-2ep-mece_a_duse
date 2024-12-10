@@ -25,7 +25,7 @@ def menu(screen: pygame.Surface) -> int:
                 return 10
             for i, button in enumerate(buttons):
                 if button.handle_event(event):
-                    return i + 1 if i < 5 else 9
+                    return i + 1 if i < 5 else 10
 
         screen.fill(BLACK)
         for button in buttons:
