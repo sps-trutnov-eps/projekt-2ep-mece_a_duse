@@ -358,7 +358,7 @@ def arena(screen: pygame.Surface) -> int:
                     buff[0]=0
                     buff[3]=0
                     save[0]+=random.randint(0,uroven*2)+uroven#novy nepritel
-                    save[2]+=random.randint(0,round(100+1.5**save[23],0))
+                    save[2]+=random.randint(0,int(100+1.5**save[23]))
                     if save[2]>100+1.5**save[1]/2:
                         save[2]-=round(100+1.5**save[1]/2,0)
                         save[2]=int(save[2])
