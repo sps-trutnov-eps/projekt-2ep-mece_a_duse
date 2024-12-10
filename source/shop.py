@@ -26,8 +26,8 @@ def shop(screen: pygame.Surface) -> int:
     b=0
     c=0
     while True:
-	button_texts = ['Meč ' + str(data[3]), 'Štít ' + str(data[5]), 'Luk ' + str(data[6]), 'Brnění ' + str(data[4]), 'Back']
-	buttons = [
+        button_texts = ['Meč ' + str(data[3]), 'Štít ' + str(data[5]), 'Luk ' + str(data[6]), 'Brnění ' + str(data[4]), 'Back']
+        buttons = [
         	Button(text, screen_width, screen_height + (i - (len(button_texts) // 2)) * 64)
         	for i, text in enumerate(button_texts)
     	]
