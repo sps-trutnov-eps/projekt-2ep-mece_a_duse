@@ -27,7 +27,6 @@ def melee(screen: pygame.Surface) -> int:
     hvezda=pygame.image.load("sprites/star.png")
     jabko=pygame.image.load("sprites/apple.png")
     uder=pygame.image.load("sprites/uder.png")
-    kruh=pygame.image.load("sprites/kruh.png")
     uder=pygame.transform.scale(uder,(200,200))
     hrac=pygame.transform.scale(hrac,(100,100))
     uder_nahoru=pygame.transform.rotate(uder,90)
@@ -96,8 +95,6 @@ def melee(screen: pygame.Surface) -> int:
                     okno.blit(uder_nahoru,(rozliseni_okna[0]/2-140, rozliseni_okna[1]*2/3-230))
                 while len(nahore)!=0:
                     if nahore[0]<20:
-                        #if 19>nahore[0]>17:
-                         #   score+=1
                         score+=1
                         nahore.remove(nahore[0])
                     else:
@@ -136,8 +133,6 @@ def melee(screen: pygame.Surface) -> int:
             print("konec")        
             with open("data.txt", "r") as file:
                 lines = file.readlines()
-                
-            #print(len(lines))
             a=0
             while a!=len(save):
                 lines[a]=str(int(save[a]))+"\n"
@@ -147,12 +142,6 @@ def melee(screen: pygame.Surface) -> int:
                 file.writelines(lines)
             return 3
 
-
-       
-       
-        #okno.blit(kruh,(418,432))
-        #okno.blit(kruh,(680,432))
-        #okno.blit(kruh,(418,432))
         a=0
         while a!=len(nahore):
             okno.blit(jabko,(rozliseni_okna[0]/2,-nahore[a]*rychlost+rozliseni_okna[1]*2/3-70))

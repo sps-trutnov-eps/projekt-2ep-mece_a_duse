@@ -64,7 +64,7 @@ def block(screen: pygame.Surface) -> int:
                 b=-posun[0]-50
             c=(a**2+b**2)**0.5
             e.append(a)
-            e.append(b)#jabka[pozice x, pozice y, uhel, rychlos x, rychlost y, cas, hvezda, region]
+            e.append(b)
             if b==0:
                 e.append(math.atan(a/0.1))
             else:
@@ -86,9 +86,7 @@ def block(screen: pygame.Surface) -> int:
             if e[-3]<0:
                 a+=1
             e.append(a)
-            #print(e)
             jabka.append(e)
-            #print(jabka)
         a=0
         while a<len(jabka):#pohyb jablek
             jabka[a][0]-=jabka[a][3]
@@ -96,9 +94,6 @@ def block(screen: pygame.Surface) -> int:
             jabka[a][5]-=1
             a+=1
         a=0
-        if stisknute_klavesy[pygame.K_s]:#vymaže všechny jabka
-            jabka=[]
-        
         
         mys=pygame.mouse.get_pos()#vypočítávání kam dát štít
         mys=mys[0]-posun[0],mys[1]-posun[1]
@@ -108,7 +103,6 @@ def block(screen: pygame.Surface) -> int:
         if pozice[1]!=0:
             d=math.atan(pozice[0]/pozice[1])
         a=0    
-        #a=len(jabka)
         
         
         region=0
@@ -117,7 +111,6 @@ def block(screen: pygame.Surface) -> int:
                 region+=2
             if mys[1]<0:
                 region+=1
-            #print(region)
             image_rect = stit.get_rect(center=(pozice[0]+posun[0],pozice[1]+posun[1]))#rotace a vykreslování štítu
             rotated_rect = stit_rotated.get_rect(center=image_rect.center)
             if region==0:
@@ -172,22 +165,13 @@ def block(screen: pygame.Surface) -> int:
                         
                     
                     if jabka[a][5]>0 and (jabka[a][7]==region or jabka[a][7]+x==region):
-                        #print(jabka[a][2])
                         b=0
                         if jabka[a][6]==False:
                             score+=1
                         jabka[a][3]*=-1
                         jabka[a][4]*=-1
                         jabka[a][5]*=-1
-                        
-                        
-                    #else:
-                     #   print(jabka[a][2])
-                      #  print("jabka reg ",jabka[a][7])
-                       # print("x ",x)
-                        #print(region)
             a+=1
-        #print(d)
             
             
             
@@ -195,13 +179,10 @@ def block(screen: pygame.Surface) -> int:
             print("konec")        
             with open("data.txt", "r") as file:
                 lines = file.readlines()
-                
-            #print(len(lines))
             a=0
             while a!=len(save):
                 lines[a]=str(int(save[a]))+"\n"
                 a+=1
-                
             with open("data.txt", "w") as file:
                 file.writelines(lines)
             return 3
@@ -218,7 +199,6 @@ def block(screen: pygame.Surface) -> int:
             a+=1
         a=0
         okno.blit(stit_rotated, rotated_rect.topleft)
-        #pygame.draw.rect(okno,(0,0,0),(posun[0]+pozice[0],posun[1]+pozice[1],10,10))
         pygame.display.update()
         clock.tick(60)
 

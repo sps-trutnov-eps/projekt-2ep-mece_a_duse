@@ -18,10 +18,6 @@ def arena(screen: pygame.Surface) -> int:
     button_texts = ['', 'Exit']
     screen_width = SCREEN_RESOLUTION[0] // 2
     screen_height = SCREEN_RESOLUTION[1] // 2 - (64 * (len(button_texts) // 2))
-    #buttons = [
-    #    Button(text, screen_width, screen_height + i * 64)
-    #    for i, text in enumerate(button_texts)
-    #]
     screen = pygame.display.set_mode(SCREEN_RESOLUTION)
     clock = pygame.time.Clock()
     hrac=pygame.image.load("sprites/hrac.png")
@@ -44,7 +40,6 @@ def arena(screen: pygame.Surface) -> int:
         slovo=radek[:-1]
         save.append(int(slovo))
     soubor.close()
-    #print(save)
     hrac_luk=pygame.transform.scale(hrac_luk,(150,150))
     sip=pygame.transform.scale(sip,(100,100))
     hrac=pygame.transform.scale(hrac,(150,150))
@@ -84,8 +79,7 @@ def arena(screen: pygame.Surface) -> int:
 
     porazeno=0
     #uder mece
-    def mec(a,b,uder,screen):#hráč=True, priste,uder,screen
-        #print("uder")
+    def mec(a,b,uder,screen):
         if a:
             d=740
             if b==0:
@@ -123,7 +117,7 @@ def arena(screen: pygame.Surface) -> int:
             clock.tick(60)
 
     font=pygame.font.Font(None, 40)
-    pop=[0,0,0,0,0,0]#enemy dem t,hrac dem t,poison dem t
+    pop=[0,0,0,0,0,0]
 
     font2=pygame.font.Font(None, 20)
     while True:
@@ -148,16 +142,10 @@ def arena(screen: pygame.Surface) -> int:
                 elif 270<mys[0]<310 and save[10]!=0:
                     save[10]-=1
                     buff[2]+=10#shield
-                #return 10
-            #for i, button in enumerate(buttons):
-             #   if button.handle_event(event):
-              #      pass
         stisknute_klavesy = pygame.key.get_pressed()
         timer+=1
         if utocim and smer!=0:
-            #print("a")
             if 199<hrac_x<500:#pohyb hrace
-                #print("b")
                 screen.blit(pozadi,(0,0))
                 if hrac_x==200 and smer==5:
                     if luk>random.randint(0,100):
@@ -167,16 +155,13 @@ def arena(screen: pygame.Surface) -> int:
                 timer=0
             else:
                 if timer<2 and hrac_x>400:
-                    #print("mozna")
                     mec(True,priste,uder,screen) #animace
                     screen.blit(pozadi,(0,0))
                 else:
                     if hrac_x<400:
-                        #print("otocka")
                         utocim=False
                         hrac_x=200
                     else:
-                        #print("demage")
                         if priste!=4 and priste!=5 and priste!=6:
                             pop[3]=60
                         if buff[4]!=0:
@@ -233,15 +218,11 @@ def arena(screen: pygame.Surface) -> int:
                                 buff[a]-=1
                             a+=1
                         a=0
-                        #print("uder h")
 
         elif buff[0]!=0:
-            #print("spravna otocka")
-            #print(hrac_x,utocim,smer)
             smer*=-1
             utocim=True
         elif not utocim:#pohyb nepritele
-             #print("taddy")
              if 721>enemy_x>400:
                  screen.blit(pozadi,(0,0))
                  enemy_x+=smer
@@ -259,7 +240,6 @@ def arena(screen: pygame.Surface) -> int:
                  else:
                     pop[1]=60
                     if random.randint(0,100)<dodge:
-                        #print("dodge")
                         c=20
                         pop[0]=0
                     elif buff[1]>0:
@@ -273,18 +253,14 @@ def arena(screen: pygame.Surface) -> int:
                             stiit(icony[4],screen)
                             hrac_zivoty-=enemy_demage/shield
                             pop[0]=enemy_demage/shield
-                            #print("block")
                         else:
                             hrac_zivoty-=enemy_demage
                             pop[0]+=enemy_demage
                     if hrac_zivoty>hrac_max_zivoty:
                         hrac_zivoty=hrac_max_zivoty
-                        
-                    #print("uder e")
                     smer=smer*-1
                     enemy_x+=smer
         if smer==0:#střelba z luku
-            #print("strelba")
             screen.blit(pozadi,(0,0))
             if timer<30:
                 screen.blit(hrac_luk,(200,SCREEN_RESOLUTION[1]/2))
@@ -345,16 +321,13 @@ def arena(screen: pygame.Surface) -> int:
             if hrac_zivoty<0:
                 a=1
                 save[18]+=1
-                #print("prohra")
             elif enemy_zivoty<0:
                 porazeno+=1
                 save[17]+=1
                 if porazeno>len(enemaci)-1:
                     save[23]+=1
                     a=1
-                    #print("výhra")
                 else:
-                    #print("porazil jsi jednoho")
                     buff[0]=0
                     buff[3]=0
                     save[0]+=random.randint(0,uroven*2)+uroven#novy nepritel
@@ -371,12 +344,10 @@ def arena(screen: pygame.Surface) -> int:
                     smer*=-1
                     
         
-        if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or a==1 or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni areny
-            #print("konec")        
+        if (pygame.mouse.get_pressed()[0] and mys[0]<100 and mys[1]<100) or a==1 or stisknute_klavesy[pygame.K_ESCAPE]:#ukonceni areny      
             with open("data.txt", "r") as file:
                 lines = file.readlines()
                 
-            #print(len(lines))
             a=0
             while a!=len(save):
                 lines[a]=str(int(save[a]))+"\n"

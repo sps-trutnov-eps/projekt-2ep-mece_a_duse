@@ -63,26 +63,21 @@ def agility(screen: pygame.Surface) -> int:
             player.y = player_y - player_height
             b=a
             a=0
-            print(a,b,flip)
         if keys[pygame.K_DOWN]:
             player.x = player_x
             player.y = player_y
             b=a
             a=0
-            print(a,b,flip)
         if keys[pygame.K_LEFT]:
             player.x = player_x - player_width
             player.y = player_y
             b=a
             a=-1
-            print(a,b,flip)
         if keys[pygame.K_RIGHT]:
             player.x = player_x + player_width
             player.y = player_y
             b=a
             a=1
-            print(a,b,flip)
-
 
         # Spawn apples
         if frame_count % apple_frequency == 0:
@@ -159,9 +154,7 @@ def agility(screen: pygame.Surface) -> int:
             return 3
     
         
-        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. Já se ve tvém kódu pořádně nevyznám.
-        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. Já se ve tvém kódu pořádně nevyznám.
-        #Ahoj Pavle mohl bys prosímtě udělat ať se hráč otočí do leva když jde do leva a doprava když jde do prava. Podobně jako je to v melee. Já se ve tvém kódu pořádně nevyznám.
+
             
         if b!=2 and a!=b:
             if a==0:

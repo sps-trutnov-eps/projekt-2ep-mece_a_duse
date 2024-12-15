@@ -26,7 +26,7 @@ def range(screen: pygame.Surface) -> int:
     d=0 
     e=[] 
     terce=[] 
-    sip=[0,1000,1000] 
+    sip=[10,1000,1000] 
     okno = pygame.display.set_mode(rozliseni_okna) 
     score=0 
      
